@@ -56,7 +56,7 @@ public class AuthController {
             return APIResponse.builder().data("Wrong password").build();
         }
         catch(UsernameNotFoundException | NullPointerException e){
-            return APIResponse.builder().data("Username does not exist").build();
+            return APIResponse.builder().data("Email does not exist").build();
         }
         catch(Exception e){
             return APIResponse.builder().data("Verify account").build();
