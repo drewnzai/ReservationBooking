@@ -22,6 +22,7 @@ import com.andrewnzai.ReservationBooking.models.RefreshToken;
 import com.andrewnzai.ReservationBooking.models.User;
 import com.andrewnzai.ReservationBooking.models.UserDetailsImpl;
 import com.andrewnzai.ReservationBooking.models.VerificationToken;
+import com.andrewnzai.ReservationBooking.repositories.RefreshTokenRepository;
 import com.andrewnzai.ReservationBooking.repositories.RoleRepository;
 import com.andrewnzai.ReservationBooking.repositories.UserRepository;
 import com.andrewnzai.ReservationBooking.repositories.VerificationTokenRepository;
@@ -39,6 +40,7 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     public void signup(RegisterRequest registerRequest) throws Exception {
         if(userRepository.existsByEmail(registerRequest.getEmail())){

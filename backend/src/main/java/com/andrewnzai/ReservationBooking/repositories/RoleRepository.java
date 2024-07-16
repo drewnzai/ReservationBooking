@@ -8,4 +8,8 @@ import com.andrewnzai.ReservationBooking.models.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long>{
 
+    boolean existsByName(String role);
+
+    Role findByName(String role);
+
 }
