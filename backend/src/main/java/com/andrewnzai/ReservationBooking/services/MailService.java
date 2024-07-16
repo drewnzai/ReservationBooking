@@ -29,7 +29,7 @@ public class MailService {
     public void sendMail(NotificationEmail notificationEmail) throws Exception {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("drewslounge@email.com");
+            messageHelper.setFrom("reservationbooking@email.com");
             messageHelper.setTo(notificationEmail.getRecipient());
             messageHelper.setSubject(notificationEmail.getSubject());
             messageHelper.setText(build(notificationEmail.getBody()));
