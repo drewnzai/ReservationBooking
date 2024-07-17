@@ -25,7 +25,8 @@ export default function Register(){
             
             const registerRequest: RegisterRequest = {
                 password: values.confirmedPassword,
-                email: values.email
+                email: values.email,
+                role: "ROLE_USER"
             };
             
             authService.signup(registerRequest);
