@@ -1,6 +1,10 @@
 package com.andrewnzai.ReservationBooking.models;
 
+import com.andrewnzai.ReservationBooking.enums.RoomType;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,7 +22,8 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private RoomType roomType;
     private Long price;
     private Long available;
 }

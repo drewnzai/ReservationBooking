@@ -30,7 +30,7 @@ public class ReservationService {
 
                 Long days = ChronoUnit.DAYS.between(reservationRequest.getFromDate(), reservationRequest.getToDate());
                 AvailableRoom availableRoom = new AvailableRoom();
-                availableRoom.setRoomType(room.getName());
+                availableRoom.setRoomType(room.getRoomType().name());
                 availableRoom.setDays(days);
                 availableRoom.setTotal(room.getPrice()* reservationRequest.getGuestsNo()* days);
                 availableRooms.add(availableRoom);
