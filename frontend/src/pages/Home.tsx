@@ -5,10 +5,11 @@ import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@mui/material";
+import { ReservationRequest } from "../models/ReservationRequest";
 
 export default function Home(){
 
-    const initialValues = {
+    const initialValues: ReservationRequest = {
         guestsNo: 1,
         fromDate: "",
         toDate: ""
@@ -20,7 +21,7 @@ export default function Home(){
        toDate: yup.string().required("The date is required")
     });
 
-    const handleSubmit = (values: any) => {
+    const handleSubmit = (values: ReservationRequest) => {
         console.log(values);
     };
 
