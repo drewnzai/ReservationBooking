@@ -36,7 +36,7 @@ export default class AuthService{
                     return;
                 }
                 else{
-                    localStorage.setItem("user", JSON.stringify(response.data));
+                    localStorage.setItem("reservation_user", JSON.stringify(response.data));
                     this.navigate("/");
                 }
             }
@@ -44,18 +44,18 @@ export default class AuthService{
     }
 
     getCurrentUsername(){
-        const userStr = localStorage.getItem("user");
+        const userStr = localStorage.getItem("reservation_user");
         if(userStr){
-            const user = JSON.parse(userStr);
-            return user.username;
+            const reservation_user = JSON.parse(userStr);
+            return reservation_user.username;
         }
     }
 
     getCurrentJWT(){
-        const userStr = localStorage.getItem("user");
+        const userStr = localStorage.getItem("reservation_user");
         if(userStr){
-            const user = JSON.parse(userStr);
-            return user.authenticationToken;
+            const reservation_user = JSON.parse(userStr);
+            return reservation_user.authenticationToken;
         }
     }
 }
