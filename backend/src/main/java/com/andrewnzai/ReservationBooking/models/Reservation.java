@@ -22,7 +22,7 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private User user;
+    private User reserver;
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
     @ManyToOne
