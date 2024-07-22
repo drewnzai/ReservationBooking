@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.andrewnzai.ReservationBooking.dtos.AvailableRoom;
 import com.andrewnzai.ReservationBooking.dtos.ReservationRequest;
 import com.andrewnzai.ReservationBooking.models.Room;
 import com.andrewnzai.ReservationBooking.repositories.ReservationRepository;
@@ -20,10 +21,11 @@ public class ReservationService {
 
     public Object searchForAvailable(ReservationRequest reservationRequest){
         List<Room> rooms = roomRepository.findAll();
+        List<AvailableRoom> availableRooms = new ArrayList<>();
 
         for(Room room: rooms){
             if(room.getAvailable() >= reservationRequest.getGuestsNo()){
-                
+                AvailableRoom availableRoom = new AvailableRoom();
             }
         }
         return null;
