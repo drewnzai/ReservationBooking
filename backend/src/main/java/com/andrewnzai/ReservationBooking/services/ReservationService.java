@@ -20,13 +20,12 @@ public class ReservationService {
 
     public Object searchForAvailable(ReservationRequest reservationRequest){
         List<Room> rooms = roomRepository.findAll();
-        List<RoomDto> roomDtos = new ArrayList<>();
 
         for(Room room: rooms){
             if(room.getAvailable() >= reservationRequest.getGuestsNo()){
-                
+
             }
         }
-        
+        return null;
     }
 }
