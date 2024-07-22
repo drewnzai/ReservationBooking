@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AvailableRooms {
+public class AvailableRoom {
     private String roomType;
     private Long total;
     private Long days;
