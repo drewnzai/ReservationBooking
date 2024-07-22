@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import lobby from "/lobby.jpeg";
-import room from "/room.jpeg";
+import lobby from "../../public/lobby.jpeg";
+import room from "../../public/room.jpeg";
 import BackgroundSlider from "react-background-slider";
 
 export default function Home(){
@@ -28,7 +28,7 @@ export default function Home(){
 
             }}            
             >
-                
+                <h1>Welcome</h1>
             </Box>
         </Box>
     );
