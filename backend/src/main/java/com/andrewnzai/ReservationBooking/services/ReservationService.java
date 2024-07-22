@@ -1,7 +1,12 @@
 package com.andrewnzai.ReservationBooking.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.andrewnzai.ReservationBooking.dtos.ReservationRequest;
+import com.andrewnzai.ReservationBooking.models.Room;
 import com.andrewnzai.ReservationBooking.repositories.ReservationRepository;
 import com.andrewnzai.ReservationBooking.repositories.RoomRepository;
 
@@ -13,7 +18,15 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final RoomRepository roomRepository;
 
-    public List<ReservationDto> searchForAvailable(ReservationRequest reservationRequest){
-        return null;
+    public Object searchForAvailable(ReservationRequest reservationRequest){
+        List<Room> rooms = roomRepository.findAll();
+        List<RoomDto> roomDtos = new ArrayList<>();
+
+        for(Room room: rooms){
+            if(room.getAvailable() >= reservationRequest.getGuestsNo()){
+                
+            }
+        }
+        
     }
 }

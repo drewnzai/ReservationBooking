@@ -20,4 +20,5 @@ public class Room {
     private Long id;
     private String name;
     private Long price;
+    private Long available;
 }
