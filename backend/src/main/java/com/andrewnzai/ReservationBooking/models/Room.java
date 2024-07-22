@@ -25,5 +25,6 @@ public class Room {
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
     private Long price;
-    private Long available;
+    private Integer accomodates;
+    private Integer available;
 }

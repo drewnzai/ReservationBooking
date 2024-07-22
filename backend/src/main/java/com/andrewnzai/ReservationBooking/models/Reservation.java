@@ -9,7 +9,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,8 +33,18 @@ public class Reservation {
     private LocalDate checkIn;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkOut;
+    @Min(1)
+    @Max(9)
     private Integer occupants;
     @ManyToOne
     private Room room;
+
+    @PrePersist
+    @PreUpdate
+    private void validateOccupants() {
+        if (occupants == null || room == null || occupants > room.getAccomodates()) {
+            throw new IllegalArgumentException("Number of occupants exceeds room capacity.");
+        }
+    }
 
 }
