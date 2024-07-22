@@ -1,6 +1,8 @@
 package com.andrewnzai.ReservationBooking.models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,9 +25,12 @@ public class Reservation {
     private Long id;
     @ManyToOne
     private User reserver;
-    private LocalDateTime checkIn;
-    private LocalDateTime checkOut;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate checkIn;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate checkOut;
+    private Integer occupants;
     @ManyToOne
-    private Room type;
+    private Room room;
 
 }
