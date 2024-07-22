@@ -1,4 +1,7 @@
 import { Box } from "@mui/material";
+import lobby from "/lobby.jpeg";
+import room from "/room.jpeg";
+import BackgroundSlider from "react-background-slider";
 
 export default function Home(){
 
@@ -10,6 +13,9 @@ export default function Home(){
             padding: "3px"
         }}
         >
+            <BackgroundSlider
+  images={[lobby, room]}
+  duration={10} transition={2} />
             <Box
             mt={"200px"}
             display="block"
