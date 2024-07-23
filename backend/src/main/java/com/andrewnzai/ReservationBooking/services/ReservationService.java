@@ -28,7 +28,7 @@ public class ReservationService {
         Long days = ChronoUnit.DAYS.between(reservationRequest.getFromDate(), reservationRequest.getToDate());
         
         for(Room room: rooms){
-            if(room.getAvailable() * room.getAccomodates() >= reservationRequest.getGuestsNo()){
+            if(room.getAvailable() * room.getAccommodates() >= reservationRequest.getGuestsNo()){
                 
             }
         }

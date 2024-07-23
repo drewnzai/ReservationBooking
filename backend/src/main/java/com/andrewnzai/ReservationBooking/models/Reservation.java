@@ -42,7 +42,7 @@ public class Reservation {
     @PrePersist
     @PreUpdate
     private void validateOccupants() {
-        if (occupants == null || room == null || occupants > room.getAccomodates()) {
+        if (occupants == null || room == null || occupants > room.getAccommodates()) {
             throw new IllegalArgumentException("Number of occupants exceeds room capacity.");
         }
     }
