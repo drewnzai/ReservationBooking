@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservationRequest {
-    private Long guestsNo;
+    private Integer guestsNo;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate toDate;
     @JsonFormat(pattern = "dd/MM/yyyy")
