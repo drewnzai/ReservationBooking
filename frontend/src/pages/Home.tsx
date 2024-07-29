@@ -6,8 +6,10 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@mui/material";
 import { ReservationRequest } from "../models/ReservationRequest";
+import ReservationService from "../services/ReservationService.service";
 
 export default function Home(){
+    const reservationService = new ReservationService();
 
     const initialValues: ReservationRequest = {
         guestsNo: 1,
@@ -22,7 +24,12 @@ export default function Home(){
     });
 
     const handleSubmit = (values: ReservationRequest) => {
-        console.log(values);
+        reservationService.searchForAvailableRooms(values)
+            .then(
+                (response) => {
+                console.log(response)
+            }
+            );
     };
 
     return(

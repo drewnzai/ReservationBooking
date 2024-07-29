@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {RefreshTokenRequest} from '../models/RefreshTokenRequest';
 
-
 const ApiInterceptor = axios.create({
   baseURL: 'http://localhost:8080/api/',
 });
@@ -10,12 +9,12 @@ const ApiInterceptor = axios.create({
 ApiInterceptor.interceptors.request.use(
   
     (config) => {
-        const userStr = localStorage.getItem("user");
+        const userStr = localStorage.getItem("reservation_user");
         
         if(userStr){
-        const user = JSON.parse(userStr);
+        const reservation_user = JSON.parse(userStr);
 
-        const token = user.authenticationToken;
+        const token = reservation_user.authenticationToken;
         
         if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -37,13 +36,13 @@ ApiInterceptor.interceptors.response.use(
   
         try {
 
-            const userStr = localStorage.getItem("user");
+            const userStr = localStorage.getItem("reservation_user");
             if(userStr){
-                const user = JSON.parse(userStr);
+                const reservation_user = JSON.parse(userStr);
 
                 const refreshTokenRequest: RefreshTokenRequest = {
-                    username: user.username,
-                    refreshToken: user.refreshToken
+                    username: reservation_user.username,
+                    refreshToken: reservation_user.refreshToken
                 }
 
                 const response = await axios.post("http://localhost:8080/api/auth/refresh", refreshTokenRequest);
@@ -54,7 +53,7 @@ ApiInterceptor.interceptors.response.use(
                   else{
                     const refreshedUser = response.data;
                     
-                    localStorage.setItem("user", JSON.stringify(refreshedUser));
+                    localStorage.setItem("reservation_user", JSON.stringify(refreshedUser));
                     
                     originalRequest.headers.Authorization = `Bearer ${refreshedUser.authenticationToken}`;
                     return axios(originalRequest);
@@ -66,6 +65,8 @@ ApiInterceptor.interceptors.response.use(
               }
               catch (error) {
                 console.log(error);
+                localStorage.removeItem("reservation_user");
+                window.location.href = "/login";
               }
       }
   
