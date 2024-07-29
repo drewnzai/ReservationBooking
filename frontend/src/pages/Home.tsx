@@ -7,9 +7,11 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@mui/material";
 import { ReservationRequest } from "../models/ReservationRequest";
 import ReservationService from "../services/ReservationService.service";
+import { useNavigate } from "react-router-dom";
 
 export default function Home(){
     const reservationService = new ReservationService();
+    const navigate = useNavigate();
 
     const initialValues: ReservationRequest = {
         guestsNo: 1,
@@ -26,8 +28,8 @@ export default function Home(){
     const handleSubmit = (values: ReservationRequest) => {
         reservationService.searchForAvailableRooms(values)
             .then(
-                (response) => {
-                console.log(response)
+                (response: AvailableRooms[]) => {
+                    navigate("/available", {state: {rooms: response}})
             }
             );
     };
