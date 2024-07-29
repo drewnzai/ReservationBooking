@@ -5,7 +5,7 @@ const base_url = "http://localhost:8080/api/reservation/";
 
 export default class ReservationService{
     searchForAvailableRooms(reservationRequest: ReservationRequest){
-        return ApiInterceptor.post("search", reservationRequest)
+        return ApiInterceptor.post(base_url + "search", reservationRequest)
             .then(
                 (response) => {
                     if(response.data){
