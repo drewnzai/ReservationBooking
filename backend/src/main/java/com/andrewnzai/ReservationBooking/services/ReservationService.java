@@ -33,7 +33,12 @@ public class ReservationService {
 
             if (room.getAvailable() >= availableRoomsForGuests) {
                 long totalCost = room.getPrice() * availableRoomsForGuests * days;
-                AvailableRoom availableRoom = new AvailableRoom(room.getRoomType().name(), days, totalCost);
+                
+                AvailableRoom availableRoom = new AvailableRoom();
+                availableRoom.setDays(days);
+                availableRoom.setRoomType(room.getRoomType().name());
+                availableRoom.setTotal(totalCost);
+
                 availableRooms.add(availableRoom);
             }
         }
