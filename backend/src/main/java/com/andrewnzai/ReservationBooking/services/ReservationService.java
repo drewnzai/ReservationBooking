@@ -24,12 +24,17 @@ public class ReservationService {
     public List<AvailableRoom> searchForAvailable(ReservationRequest reservationRequest) {
         List<Room> rooms = roomRepository.findAll();
         List<AvailableRoom> availableRooms = new ArrayList<>();
-
         Long days = ChronoUnit.DAYS.between(reservationRequest.getFromDate(), reservationRequest.getToDate());
-        
-        for(Room room: rooms){
-            if(room.getAvailable() * room.getAccommodates() >= reservationRequest.getGuestsNo()){
-                
+        int guestsNo = reservationRequest.getGuestsNo();
+
+        for (Room room : rooms) {
+            int roomCapacity = room.getAccommodates();
+            int availableRoomsForGuests = (int) Math.ceil((double) guestsNo / roomCapacity);
+
+            if (room.getAvailable() >= availableRoomsForGuests) {
+                long totalCost = room.getPrice() * availableRoomsForGuests * days;
+                AvailableRoom availableRoom = new AvailableRoom(room.getRoomType().name(), days, totalCost);
+                availableRooms.add(availableRoom);
             }
         }
 
