@@ -8,6 +8,7 @@ import {Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select} 
 import { ReservationRequest } from "../models/ReservationRequest";
 import ReservationService from "../services/ReservationService.service";
 import { useNavigate } from "react-router-dom";
+import { AvailableRooms } from "../models/AvailableRooms";
 
 export default function Home(){
     const reservationService = new ReservationService();
