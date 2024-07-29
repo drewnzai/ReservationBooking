@@ -1,8 +1,8 @@
-import ApiInterceptor from "../auth/ApiInterceptor";
 import {LoginRequest} from "../models/LoginRequest";
 import {RegisterRequest} from "../models/RegisterRequest";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 const base_url = "http://localhost:8080/api/auth/";
 
@@ -10,7 +10,7 @@ export default class AuthService{
     private navigate = useNavigate();
 
     signup(registerRequest: RegisterRequest){
-        ApiInterceptor.post(base_url + "signup", registerRequest)
+        axios.post(base_url + "signup", registerRequest)
             .then(
                 (response) => {
                     if(response.data.data){
@@ -27,7 +27,7 @@ export default class AuthService{
     }
 
     login(loginRequest: LoginRequest){
-        ApiInterceptor.post(base_url + "login", loginRequest)
+        axios.post(base_url + "login", loginRequest)
         .then(
             (response) => {
                 
