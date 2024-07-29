@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Entrypoint from './pages/Entrypoint';
 import Home from './pages/Home';
+import Available from './pages/Available';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
         <Route element={<Entrypoint/>}>
           
         <Route path="/" element={<Home/>}/>
+        <Route path="/available" element={<Available/>}/>
         </Route>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
