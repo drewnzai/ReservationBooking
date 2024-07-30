@@ -53,6 +53,17 @@ export default function Reserve(){
               variant="outlined"
             />
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Total Occupants"
+              value={`${room.occupants}`}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="outlined"
+            />
+          </Grid>
         </Grid>
         <Box mt={4}>
           <Button

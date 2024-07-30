@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.andrewnzai.ReservationBooking.dtos.AvailableRoom;
 import com.andrewnzai.ReservationBooking.dtos.ReservationRequest;
+import com.andrewnzai.ReservationBooking.enums.RoomType;
 import com.andrewnzai.ReservationBooking.models.Reservation;
 import com.andrewnzai.ReservationBooking.models.Room;
+import com.andrewnzai.ReservationBooking.models.User;
 import com.andrewnzai.ReservationBooking.repositories.ReservationRepository;
 import com.andrewnzai.ReservationBooking.repositories.RoomRepository;
 
@@ -23,6 +24,7 @@ import lombok.AllArgsConstructor;
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final RoomRepository roomRepository;
+    private final AuthService authService;
 
     public List<AvailableRoom> searchForAvailable(ReservationRequest reservationRequest) {
         List<Room> rooms = roomRepository.findAll();
@@ -53,12 +55,34 @@ public class ReservationService {
                 availableRoom.setDays(days);
                 availableRoom.setRoomType(room.getRoomType().name());
                 availableRoom.setTotal(totalCost);
+                availableRoom.setOccupants(guestsNo);
+                availableRoom.setCheckIn(reservationRequest.getFromDate());
+                availableRoom.setCheckOut(reservationRequest.getToDate());
 
                 availableRooms.add(availableRoom);
             }
         }
 
         return availableRooms;
+    }
+
+    public boolean makeReservation(AvailableRoom availableRoom){
+        User user = authService.getCurrentUser();
+
+        RoomType roomType = RoomType.valueOf(availableRoom.getRoomType());
+        Room room = roomRepository.findByRoomType(roomType);
+
+        Reservation reservation = new Reservation();
+        reservation.setCheckIn(availableRoom.getCheckIn());
+        reservation.setCheckOut(availableRoom.getCheckOut());
+        reservation.setOccupants(availableRoom.getOccupants());
+        reservation.setReserver(user);
+        reservation.setRoom(room);
+
+        reservationRepository.save(reservation);
+
+        return true;
+
     }
 
    
