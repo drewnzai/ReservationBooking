@@ -28,10 +28,12 @@ import com.andrewnzai.ReservationBooking.repositories.UserRepository;
 import com.andrewnzai.ReservationBooking.repositories.VerificationTokenRepository;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @AllArgsConstructor
 @Transactional
+@Slf4j
 public class AuthService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -131,6 +133,7 @@ public class AuthService {
         }
         else if(!isNotExpired){
             refreshTokenRepository.deleteByToken(refreshTokenRequest.getRefreshToken());
+            log.error("Refresh Token has expired", new Exception());
 
             throw new Exception("Refresh Token has expired");
         }
