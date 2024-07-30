@@ -1,4 +1,4 @@
-import { ReservationRequest } from "../models/ReservationRequest";
+import {ReservationRequest} from "../models/ReservationRequest";
 import ApiInterceptor from "../auth/ApiInterceptor";
 
 

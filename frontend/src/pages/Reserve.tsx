@@ -1,7 +1,7 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import ReservationService from "../services/ReservationService.service";
-import { Box, Button, Typography, TextField, Grid, Paper } from '@mui/material';
-import { Reservation } from "../models/Reservation.ts";
+import {Box, Button, Grid, Paper, TextField, Typography} from '@mui/material';
+import {Reservation} from "../models/Reservation.ts";
 
 export default function Reserve(){
     const location = useLocation();

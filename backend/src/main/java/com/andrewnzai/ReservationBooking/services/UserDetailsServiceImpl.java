@@ -1,15 +1,14 @@
 package com.andrewnzai.ReservationBooking.services;
 
+import com.andrewnzai.ReservationBooking.models.User;
+import com.andrewnzai.ReservationBooking.models.UserDetailsImpl;
+import com.andrewnzai.ReservationBooking.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import com.andrewnzai.ReservationBooking.models.User;
-import com.andrewnzai.ReservationBooking.models.UserDetailsImpl;
-import com.andrewnzai.ReservationBooking.repositories.UserRepository;
 
 @Service
 @AllArgsConstructor

@@ -1,5 +1,6 @@
 package com.andrewnzai.ReservationBooking.jwt;
 
+import com.andrewnzai.ReservationBooking.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,8 +15,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.andrewnzai.ReservationBooking.services.UserDetailsServiceImpl;
 
 import java.io.IOException;
 

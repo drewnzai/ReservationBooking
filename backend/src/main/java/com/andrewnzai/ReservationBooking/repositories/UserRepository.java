@@ -1,9 +1,8 @@
 package com.andrewnzai.ReservationBooking.repositories;
 
+import com.andrewnzai.ReservationBooking.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.andrewnzai.ReservationBooking.models.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{

@@ -1,17 +1,5 @@
 package com.andrewnzai.ReservationBooking.services;
 
-import java.time.Instant;
-import java.util.UUID;
-
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.andrewnzai.ReservationBooking.dtos.LoginRequest;
 import com.andrewnzai.ReservationBooking.dtos.LoginResponse;
 import com.andrewnzai.ReservationBooking.dtos.RefreshTokenRequest;
@@ -26,9 +14,19 @@ import com.andrewnzai.ReservationBooking.repositories.RefreshTokenRepository;
 import com.andrewnzai.ReservationBooking.repositories.RoleRepository;
 import com.andrewnzai.ReservationBooking.repositories.UserRepository;
 import com.andrewnzai.ReservationBooking.repositories.VerificationTokenRepository;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor

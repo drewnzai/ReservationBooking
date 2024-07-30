@@ -1,5 +1,6 @@
 package com.andrewnzai.ReservationBooking.services;
 
+import com.andrewnzai.ReservationBooking.emails.NotificationEmail;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,8 +10,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
-import com.andrewnzai.ReservationBooking.emails.NotificationEmail;
 
 @Service
 @AllArgsConstructor

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import {Card, CardContent, CardMedia, Typography} from '@mui/material';
 
 interface RoomCardProps {
   roomType: string;

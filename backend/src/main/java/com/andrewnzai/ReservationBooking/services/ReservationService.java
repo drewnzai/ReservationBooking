@@ -1,13 +1,5 @@
 package com.andrewnzai.ReservationBooking.services;
 
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.stereotype.Service;
-
 import com.andrewnzai.ReservationBooking.dtos.ReservationDto;
 import com.andrewnzai.ReservationBooking.dtos.ReservationRequest;
 import com.andrewnzai.ReservationBooking.enums.RoomType;
@@ -16,8 +8,14 @@ import com.andrewnzai.ReservationBooking.models.Room;
 import com.andrewnzai.ReservationBooking.models.User;
 import com.andrewnzai.ReservationBooking.repositories.ReservationRepository;
 import com.andrewnzai.ReservationBooking.repositories.RoomRepository;
-
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor

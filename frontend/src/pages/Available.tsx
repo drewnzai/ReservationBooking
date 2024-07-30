@@ -1,5 +1,5 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Box, Grid, Button, Typography } from '@mui/material';
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Box, Button, Grid, Typography} from '@mui/material';
 import RoomCard from "../components/RoomCard";
 
 export default function Available(){

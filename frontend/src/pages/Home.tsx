@@ -5,10 +5,10 @@ import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@mui/material";
-import { ReservationRequest } from "../models/ReservationRequest";
+import {ReservationRequest} from "../models/ReservationRequest";
 import ReservationService from "../services/ReservationService.service";
-import { useNavigate } from "react-router-dom";
-import { Reservation } from "../models/Reservation.ts";
+import {useNavigate} from "react-router-dom";
+import {Reservation} from "../models/Reservation.ts";
 
 export default function Home(){
     const reservationService = new ReservationService();

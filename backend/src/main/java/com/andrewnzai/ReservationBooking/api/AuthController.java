@@ -1,16 +1,15 @@
 package com.andrewnzai.ReservationBooking.api;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.*;
-
 import com.andrewnzai.ReservationBooking.dtos.APIResponse;
 import com.andrewnzai.ReservationBooking.dtos.LoginRequest;
 import com.andrewnzai.ReservationBooking.dtos.RefreshTokenRequest;
 import com.andrewnzai.ReservationBooking.dtos.RegisterRequest;
 import com.andrewnzai.ReservationBooking.services.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth/")

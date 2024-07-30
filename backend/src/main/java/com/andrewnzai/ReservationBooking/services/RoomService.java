@@ -1,11 +1,9 @@
 package com.andrewnzai.ReservationBooking.services;
 
-import org.springframework.stereotype.Service;
-
 import com.andrewnzai.ReservationBooking.models.Room;
 import com.andrewnzai.ReservationBooking.repositories.RoomRepository;
-
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
