@@ -71,9 +71,18 @@ export default function Reserve(){
             color="secondary"
             onClick={handleConfirm}
           >
-            Confirm Reservation
+            Make Reservation
           </Button>
         </Box>
+
+        <Box mt={4}>
+        <Button variant="contained" sx={{
+          backgroundColor: "red"
+        }} onClick={() => navigate('/')}>
+            Go back to Home
+          </Button>
+        </Box>
+
       </Paper>
     </Box>
     );

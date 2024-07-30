@@ -3,12 +3,11 @@ import AuthService from "../services/AuthService.service";
 import {Formik} from "formik";
 import * as yup from "yup"
 import {Box, Button, TextField, Typography, useTheme} from "@mui/material";
-import {tokens} from "../theme";
+import { Link } from "react-router-dom";
 
 export default function Login(){
 
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     
     const authService = new AuthService();
 
@@ -23,108 +22,89 @@ export default function Login(){
 
     const checkoutSchema = yup.object().shape({
         password: yup.string().required("required"),
-        email: yup.string().email().required("required")
+        email: yup.string().email("Invalid email format").required("required")
 
     });
 
     return(
-        <Box display={"flex"}
-            sx={{
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "3px"
-            }}>
-            <Formik
-                onSubmit={handleFormSubmit}
-                initialValues={initialValues}
-                validationSchema={checkoutSchema}
-            >
-                {({
-                      values,
-                      errors,
-                      touched,
-                      handleBlur,
-                      handleChange,
-                      handleSubmit,
-                  }) => (
-                    <form onSubmit={handleSubmit}>
-                        <Box
-                            mt={"200px"}
-                            display="block"
-                            width="300px"
-                            gap="30px"
-                            p={"10px"}
-                            sx={{
-                                alignItems: "center",
-                                justifyContent: "center"
-
-                            }}
-
-                        >
-                            <Typography
-                                variant="h2"
-                                color={colors.grey[100]}
-                                fontWeight="bold"
-                                sx={{ m: "0 0 5px 0"}}
-                            >
-                                Login
-                            </Typography>
-                            <Box width={"100%"}>
-                                <TextField
-                                    sx={{
-                                        borderRadius: "4px"
-                                    }}
-                                    fullWidth
-                                    variant="filled"
-                                    type="text"
-                                    label="Email"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    value={values.email}
-                                    name="email"
-                                    error={!!touched.email && !!errors.email}
-                                    helperText={touched.email && errors.email}
-
-                                />
-                            </Box>
-
-
-                            <br/>
-                            <TextField
-                                fullWidth
-                                variant="filled"
-                                type="password"
-                                label="Password"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.password}
-                                name="password"
-                                error={!!touched.password && !!errors.password}
-                                helperText={touched.password && errors.password}
-
-                            />
-
-                        
-                        </Box>
-                        <Box display="flex" justifyContent="center" mt="20px">
-
-                            <Button type="submit" color="secondary" variant="contained">
-                                Login
-                            </Button>
-                        
-                        
-                        </Box>
-                        <Box display="flex" justifyContent="center" mt="20px">
-
-                        <h4>No account? 
-                            <a href="/register"> Sign up here</a>
-                        </h4>
-
-                        </Box>
-                    </form>
-                )}
-            </Formik>
-        </Box>
+        <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+      bgcolor={theme.palette.background.default}
+      p={3}
+    >
+      <Box
+        width={{ xs: '90%', sm: '400px' }}
+        bgcolor="transparent"
+        p={3}
+        
+      >
+        <Formik
+          onSubmit={handleFormSubmit}
+          initialValues={initialValues}
+          validationSchema={checkoutSchema}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Box mb={3}>
+                <Typography variant="h4" align="center" gutterBottom>
+                  Login
+                </Typography>
+              </Box>
+              <Box mb={3}>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  label="Email"
+                  name="email"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.email}
+                  error={!!touched.email && !!errors.email}
+                  helperText={touched.email && errors.email}
+                />
+              </Box>
+              <Box mb={3}>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  label="Password"
+                  type="password"
+                  name="password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.password}
+                  error={!!touched.password && !!errors.password}
+                  helperText={touched.password && errors.password}
+                />
+              </Box>
+              <Box display="flex" justifyContent="center" mb={2}>
+                <Button type="submit" color="secondary" variant="contained">
+                  Login
+                </Button>
+              </Box>
+              <Box display="flex" justifyContent="center">
+                <Typography variant="body2">
+                  No account? 
+                  <Link
+                  to={"/register"}
+                  >Sign Up here</Link>
+                </Typography>
+              </Box>
+            </form>
+          )}
+        </Formik>
+      </Box>
+    </Box>
     );
 
 }

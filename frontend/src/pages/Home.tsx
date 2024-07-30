@@ -4,7 +4,7 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import {Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@mui/material";
+import {Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import {ReservationRequest} from "../models/ReservationRequest";
 import ReservationService from "../services/ReservationService.service";
 import {useNavigate} from "react-router-dom";
@@ -21,12 +21,12 @@ export default function Home(){
     };
 
     const checkoutSchema = yup.object().shape({
-       guestsNo: yup.number().required("required"),
-       fromDate: yup.string().required("The date is required"),
-       toDate: yup.string().required("The date is required")
+       guestsNo: yup.number().required("Number of guests is required"),
+       fromDate: yup.string().required("The check in date is required"),
+       toDate: yup.string().required("The check out date is required")
     });
 
-    const handleSubmit = (values: ReservationRequest) => {
+    const handleFormSubmit = (values: ReservationRequest) => {
         reservationService.searchForAvailableRooms(values)
             .then(
                 (response: Reservation[]) => {
@@ -37,119 +37,123 @@ export default function Home(){
 
     return(
         <Box
-        sx={{
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "3px"
-        }}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+      bgcolor="background.default"
+      p={3}
+    >
+      <Box
+        width={{ xs: '90%', sm: '400px' }}
+        p={3}
+      >
+        <Formik
+          onSubmit={handleFormSubmit}
+          initialValues={initialValues}
+          validationSchema={checkoutSchema}
         >
-            <Box
-            mt={"200px"}
-            ml={"600px"}
-            display="block"
-            width="300px"
-            gap="30px"
-            p={"10px"}
-            sx={{
-                alignItems: "center",
-                justifyContent: "center"
-
-            }}            
-            >
-                <Formik
-                onSubmit={handleSubmit}
-                initialValues={initialValues}
-                validationSchema={checkoutSchema}
-                >
-                    {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
+          {({
+            values,
+            errors,
+            touched,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+          }) => (
             <form onSubmit={handleSubmit}>
-                <Box
-                display={"block"}
-                >
-                    <FormControl fullWidth>
-                    <InputLabel id="guests-number-label">Number of Guests</InputLabel>
-
-                    <Select
+              <Typography variant="h4" align="center" gutterBottom>
+                Search for Rooms
+              </Typography>
+              <Box mb={3}>
+                <FormControl fullWidth>
+                  <InputLabel id="guests-number-label">Number of Guests</InputLabel>
+                  <Select
                     labelId="guests-number-label"
                     value={values.guestsNo}
-                    label="GuestsNo"
+                    label="Number of Guests"
                     name="guestsNo"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.guestsNo && !!errors.guestsNo}
-                    defaultValue={1}
-                    >
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                            <MenuItem value={4}>4</MenuItem>
-                            <MenuItem value={5}>5</MenuItem>
-                            <MenuItem value={6}>6</MenuItem>
-                    </Select>
-                    <FormHelperText>Required</FormHelperText>
-                    </FormControl>
-                    
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['DatePicker']}>
-                    <DatePicker 
-                    label="From"
-                    disablePast 
-                    onChange={(newValue) => {
-                        // will never be null
-                        //@ts-ignore 
-                        const date = newValue.toDate();
-                        const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={6}>6</MenuItem>
+                  </Select>
+                  <FormHelperText error={!!touched.guestsNo && !!errors.guestsNo}>
+                    {touched.guestsNo && errors.guestsNo ? errors.guestsNo : 'Required'}
+                  </FormHelperText>
+                </FormControl>
+              </Box>
+              <Box mb={3}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={['DatePicker']}>
+                    <DatePicker
+                      label="From"
+                      disablePast
+                      onChange={(newValue) => {
+                        if (newValue) {
+                          const date = newValue.toDate();
+                          const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
                             .toString()
                             .padStart(2, '0')}/${date.getFullYear()}`;
-
-                        values.fromDate = formattedDate;
-
-                        }}/>
-                        
-                </DemoContainer>
-            </LocalizationProvider>
-
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['DatePicker']}>
-                    <DatePicker 
-                    label="To"
-                    disablePast
-                    onChange={(newValue) => {
-                        // will never be null
-                        //@ts-ignore 
-                        const date = newValue.toDate();
-                        const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
+                          values.fromDate = formattedDate;
+                        }
+                      }}
+                      slots={{
+                        textField: (params) => 
+                            <TextField
+                              {...params}
+                              fullWidth
+                              error={!!touched.fromDate && !!errors.fromDate}
+                              helperText={touched.fromDate && errors.fromDate}
+                            />
+                      }}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </Box>
+              <Box mb={3}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={['DatePicker']}>
+                    <DatePicker
+                      label="To"
+                      disablePast
+                      onChange={(newValue) => {
+                        if (newValue) {
+                          const date = newValue.toDate();
+                          const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
                             .toString()
                             .padStart(2, '0')}/${date.getFullYear()}`;
-
-                        values.toDate = formattedDate;
-
-                        }}/>
-                        
-                </DemoContainer>
-            </LocalizationProvider>
-            <br/>
-            <br/>
-            <Box>
-
-            <Button type="submit" color="secondary" variant="contained">
-                Search
-              </Button>
-
-            </Box>
-                </Box>
+                          values.toDate = formattedDate;
+                        }
+                      }}
+                      slots={{
+                        textField: (params) => 
+                            <TextField
+                              {...params}
+                              fullWidth
+                              error={!!touched.toDate && !!errors.toDate}
+                              helperText={touched.toDate && errors.toDate}
+                            />
+                      }}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </Box>
+              <Box display="flex" justifyContent="center" mb={2}>
+                <Button type="submit" color="secondary" variant="contained">
+                  Search
+                </Button>
+              </Box>
             </form>
-        )}
-                </Formik>
-
-            </Box>
-        </Box>
+          )}
+        </Formik>
+      </Box>
+    </Box>
     );
 }
