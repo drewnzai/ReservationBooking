@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Box, Grid, Button, Typography } from '@mui/material';
 import RoomCard from "../components/RoomCard";
 
@@ -22,12 +22,18 @@ export default function Available(){
             { /*@ts-ignore */}
           {rooms.map((room, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
+              <Link
+              to={"/reserve"}
+              key={room.roomType}
+              state={room}
+              >              
               <RoomCard
                 roomType={room.roomType}
                 imageUrl={`${room.roomType.toLowerCase().replace(/ /g, '-')}.jpeg`}
                 description={`Available for ${room.days} days.`}
                 cost = {`Total cost: $${room.total}`}
               />
+              </Link>
             </Grid>
           ))}
         </Grid>
