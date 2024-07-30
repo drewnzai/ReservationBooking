@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import ReservationService from "../services/ReservationService.service";
 import { Box, Button, Typography, TextField, Grid, Paper } from '@mui/material';
-import { AvailableRooms } from "../models/AvailableRooms";
+import { Reservation } from "../models/Reservation.ts";
 
 export default function Reserve(){
     const location = useLocation();
     const navigate = useNavigate();
-    const room:AvailableRooms = location.state;
+    const room:Reservation = location.state;
     const reservationService = new ReservationService();
 
     const handleConfirm = () => {

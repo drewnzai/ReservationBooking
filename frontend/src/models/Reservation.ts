@@ -1,4 +1,4 @@
-export interface AvailableRooms{
+export interface Reservation {
     days: number;
     roomType: string;
     total: number;
