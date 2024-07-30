@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.andrewnzai.ReservationBooking.dtos.AvailableRoom;
+import com.andrewnzai.ReservationBooking.dtos.ReservationDto;
 import com.andrewnzai.ReservationBooking.dtos.ReservationRequest;
 import com.andrewnzai.ReservationBooking.enums.RoomType;
 import com.andrewnzai.ReservationBooking.models.Reservation;
@@ -26,7 +26,7 @@ public class ReservationService {
     private final RoomRepository roomRepository;
     private final AuthService authService;
 
-    public List<AvailableRoom> searchForAvailable(ReservationRequest reservationRequest) {
+    public List<ReservationDto> searchForAvailable(ReservationRequest reservationRequest) {
         List<Room> rooms = roomRepository.findAll();
         List<Reservation> overlappingReservations = reservationRepository.findOverlappingReservations(
                 reservationRequest.getFromDate(), reservationRequest.getToDate());
@@ -38,7 +38,7 @@ public class ReservationService {
                 reservedRoomCounts.getOrDefault(reservation.getRoom().getId(), 0) + 1);
         }
 
-        List<AvailableRoom> availableRooms = new ArrayList<>();
+        List<ReservationDto> reservationDtos = new ArrayList<>();
         Long days = ChronoUnit.DAYS.between(reservationRequest.getFromDate(), reservationRequest.getToDate());
         int guestsNo = reservationRequest.getGuestsNo();
 
@@ -51,31 +51,31 @@ public class ReservationService {
             if (availableCount >= requiredRooms) {
                 long totalCost = room.getPrice() * requiredRooms * days;
                 
-                AvailableRoom availableRoom = new AvailableRoom();
-                availableRoom.setDays(days);
-                availableRoom.setRoomType(room.getRoomType().name());
-                availableRoom.setTotal(totalCost);
-                availableRoom.setOccupants(guestsNo);
-                availableRoom.setCheckIn(reservationRequest.getFromDate());
-                availableRoom.setCheckOut(reservationRequest.getToDate());
+                ReservationDto reservationDto = new ReservationDto();
+                reservationDto.setDays(days);
+                reservationDto.setRoomType(room.getRoomType().name());
+                reservationDto.setTotal(totalCost);
+                reservationDto.setOccupants(guestsNo);
+                reservationDto.setCheckIn(reservationRequest.getFromDate());
+                reservationDto.setCheckOut(reservationRequest.getToDate());
 
-                availableRooms.add(availableRoom);
+                reservationDtos.add(reservationDto);
             }
         }
 
-        return availableRooms;
+        return reservationDtos;
     }
 
-    public boolean makeReservation(AvailableRoom availableRoom){
+    public boolean makeReservation(ReservationDto reservationDto){
         User user = authService.getCurrentUser();
 
-        RoomType roomType = RoomType.valueOf(availableRoom.getRoomType());
+        RoomType roomType = RoomType.valueOf(reservationDto.getRoomType());
         Room room = roomRepository.findByRoomType(roomType);
 
         Reservation reservation = new Reservation();
-        reservation.setCheckIn(availableRoom.getCheckIn());
-        reservation.setCheckOut(availableRoom.getCheckOut());
-        reservation.setOccupants(availableRoom.getOccupants());
+        reservation.setCheckIn(reservationDto.getCheckIn());
+        reservation.setCheckOut(reservationDto.getCheckOut());
+        reservation.setOccupants(reservationDto.getOccupants());
         reservation.setReserver(user);
         reservation.setRoom(room);
 

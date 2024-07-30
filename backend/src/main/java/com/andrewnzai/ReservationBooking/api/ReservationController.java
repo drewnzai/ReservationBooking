@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.andrewnzai.ReservationBooking.dtos.ReservationRequest;
 import com.andrewnzai.ReservationBooking.dtos.APIResponse;
-import com.andrewnzai.ReservationBooking.dtos.AvailableRoom;
+import com.andrewnzai.ReservationBooking.dtos.ReservationDto;
 import com.andrewnzai.ReservationBooking.services.ReservationService;
 
 import lombok.AllArgsConstructor;
@@ -22,14 +22,14 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @PostMapping("/search")
-    public List<AvailableRoom> searchForAvailableRooms(@RequestBody ReservationRequest reservationRequest){
+    public List<ReservationDto> searchForAvailableRooms(@RequestBody ReservationRequest reservationRequest){
         return reservationService.searchForAvailable(reservationRequest);
     }
 
     @PostMapping("/reserve")
-    public Object makeReservation(@RequestBody AvailableRoom availableRoom){
+    public Object makeReservation(@RequestBody ReservationDto reservationDto){
         try{
-            return reservationService.makeReservation(availableRoom);
+            return reservationService.makeReservation(reservationDto);
         }
         catch(Exception e){
             return APIResponse.builder().data("Couldn't make the reservation. try again").build();

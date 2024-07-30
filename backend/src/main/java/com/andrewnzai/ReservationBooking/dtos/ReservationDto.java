@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AvailableRoom {
+public class ReservationDto {
     private String roomType;
     private Long total;
     private Long days;
