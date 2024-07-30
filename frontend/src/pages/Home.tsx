@@ -120,7 +120,7 @@ export default function Home(){
                 <DemoContainer components={['DatePicker']}>
                     <DatePicker 
                     label="To"
-                    disablePast 
+                    disablePast
                     onChange={(newValue) => {
                         // will never be null
                         //@ts-ignore 
