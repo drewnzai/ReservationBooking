@@ -6,6 +6,7 @@ export default function Available(){
     const location = useLocation();
     const navigate = useNavigate();
     const {rooms} = location.state; 
+
     return (
         <Box sx={{ flexGrow: 1, padding: '20px', textAlign: 'center' }}>
       {rooms.length === 0 ? (
@@ -18,6 +19,10 @@ export default function Available(){
           </Button>
         </Box>
       ) : (
+        <div>
+          <Button variant="contained" color="secondary" onClick={() => navigate('/')}>
+            Go back to Home
+          </Button>
         <Grid container spacing={3}>
             { /*@ts-ignore */}
           {rooms.map((room, index) => (
@@ -26,6 +31,9 @@ export default function Available(){
               to={"/reserve"}
               key={room.roomType}
               state={room}
+              style={{
+                textDecoration: "none"
+              }}
               >              
               <RoomCard
                 roomType={room.roomType}
@@ -37,6 +45,7 @@ export default function Available(){
             </Grid>
           ))}
         </Grid>
+        </div>
       )}
     </Box>
   );
