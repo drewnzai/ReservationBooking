@@ -57,7 +57,7 @@ export default function Reserve(){
         <Box mt={4}>
           <Button
             variant="contained"
-            color="primary"
+            color="secondary"
             onClick={handleConfirm}
           >
             Confirm Reservation
