@@ -10,7 +10,7 @@ export default function Reserve(){
     const reservationService = new ReservationService();
 
     const handleConfirm = () => {
-        console.log(room);
+        reservationService.makeReservation(room);
       };
 
     return(
