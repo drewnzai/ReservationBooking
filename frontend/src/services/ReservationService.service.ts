@@ -28,7 +28,7 @@ export default class ReservationService{
                         this.navigate("/");
                     }
                     else{
-                        toast.success("Reservation is successful");
+                        toast.success("Successfully made a reservation");
                         this.navigate("/");
                     }
                 }
