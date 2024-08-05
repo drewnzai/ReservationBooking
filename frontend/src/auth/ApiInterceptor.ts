@@ -41,7 +41,7 @@ ApiInterceptor.interceptors.response.use(
                 const reservation_user = JSON.parse(userStr);
 
                 const refreshTokenRequest: RefreshTokenRequest = {
-                    username: reservation_user.username,
+                    email: reservation_user.email,
                     refreshToken: reservation_user.refreshToken
                 }
 
