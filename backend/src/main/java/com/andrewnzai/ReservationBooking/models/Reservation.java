@@ -30,6 +30,7 @@ public class Reservation {
     private Integer occupants;
     @ManyToOne
     private Room room;
+    private Long total;
 
     @PrePersist
     @PreUpdate
