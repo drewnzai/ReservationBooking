@@ -4,15 +4,17 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import {Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
+import {Box, Button, Card, CardContent, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import {ReservationRequest} from "../models/ReservationRequest";
 import ReservationService from "../services/ReservationService.service";
 import {useNavigate} from "react-router-dom";
 import {Reservation} from "../models/Reservation.ts";
+import { useEffect, useState } from "react";
 
 export default function Home(){
     const reservationService = new ReservationService();
     const navigate = useNavigate();
+    const [reservations, setReservations] = useState<Reservation[]>([]);
 
     const initialValues: ReservationRequest = {
         guestsNo: 1,
@@ -35,6 +37,18 @@ export default function Home(){
             );
     };
 
+    const handleCardClick = () => {
+      navigate("/reservations", { state: { reservations } });
+  };
+
+    useEffect(() => {
+      // Fetch user's reservations on component mount
+      reservationService.getReservations()
+          .then((response: Reservation[]) => {
+              setReservations(response);
+          });
+  }, []);
+
     return(
         <Box
       display="flex"
@@ -48,6 +62,16 @@ export default function Home(){
         width={{ xs: '90%', sm: '400px' }}
         p={3}
       >
+        {reservations.length > 0 && (
+                    <Card sx={{ mb: 3 }} onClick={handleCardClick}>
+                        <CardContent>
+                            <Typography variant="h6">
+                                You have {reservations.length} reservation(s)
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                )}
+
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={initialValues}

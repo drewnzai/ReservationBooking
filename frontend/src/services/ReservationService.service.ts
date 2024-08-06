@@ -19,6 +19,19 @@ export default class ReservationService{
             )
     }
 
+    getReservations(){
+        return ApiInterceptor.get("reservation")
+            .then(
+                (response) => {
+                    if(response.data){
+                        return response.data;
+                    }
+
+                    return response;
+                }
+            )
+    }
+
     makeReservation(reservation: Reservation){
         return ApiInterceptor.post("reservation/reserve", reservation)
             .then(
