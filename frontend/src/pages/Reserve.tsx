@@ -6,11 +6,11 @@ import {Reservation} from "../models/Reservation.ts";
 export default function Reserve(){
     const location = useLocation();
     const navigate = useNavigate();
-    const room:Reservation = location.state;
+    const reservation:Reservation = location.state;
     const reservationService = new ReservationService();
 
     const handleConfirm = () => {
-        reservationService.makeReservation(room);
+        reservationService.makeReservation(reservation);
       };
 
     return(
@@ -24,7 +24,7 @@ export default function Reserve(){
             <TextField
               fullWidth
               label="Room Type"
-              value={room.roomType}
+              value={reservation.roomType}
               InputProps={{
                 readOnly: true,
               }}
@@ -35,7 +35,7 @@ export default function Reserve(){
             <TextField
               fullWidth
               label="Number of Days"
-              value={room.days}
+              value={reservation.days}
               InputProps={{
                 readOnly: true,
               }}
@@ -46,7 +46,7 @@ export default function Reserve(){
             <TextField
               fullWidth
               label="Total Cost"
-              value={`$${room.total}`}
+              value={`$${reservation.total}`}
               InputProps={{
                 readOnly: true,
               }}
@@ -57,7 +57,7 @@ export default function Reserve(){
             <TextField
               fullWidth
               label="Total Occupants"
-              value={`${room.occupants}`}
+              value={`${reservation.occupants}`}
               InputProps={{
                 readOnly: true,
               }}
