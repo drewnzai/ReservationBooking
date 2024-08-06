@@ -48,8 +48,8 @@ export default class ReservationService{
             )
     }
 
-    deleteReservation(id: number){
-        return ApiInterceptor.post("reservation/delete", id)
+    deleteReservation(reservation: Reservation){
+        return ApiInterceptor.post("reservation/delete", reservation)
             .then(
                 (response) => {
                     if(response.data.data){

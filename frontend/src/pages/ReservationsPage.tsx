@@ -24,7 +24,7 @@ export default function ReservationPage(){
 
     const handleDeleteConfirm = () => {
         if (selectedReservation) {
-          reservationService.deleteReservation(selectedReservation.id)
+          reservationService.deleteReservation(selectedReservation)
             .then(() => {
               handleClose();
             })
