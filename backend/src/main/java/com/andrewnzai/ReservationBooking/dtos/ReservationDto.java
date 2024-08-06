@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservationDto {
+    private Long id;
     private String roomType;
     private Long total;
     private Long days;

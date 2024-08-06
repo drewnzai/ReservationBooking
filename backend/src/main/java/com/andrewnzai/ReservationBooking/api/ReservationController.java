@@ -40,4 +40,15 @@ public class ReservationController {
     public List<ReservationDto> getReservations(){
         return reservationService.getAllReservations();
     }
+
+    @PostMapping("/delete")
+    public Object deleteReservation(@RequestBody ReservationDto reservationDto){
+        try{
+            reservationService.deleteReservation(reservationDto.getId());
+            return true;
+        }
+        catch(Exception e){
+            return APIResponse.builder().data("Couldn't make the reservation. try again").build();
+        }
+    }
 }

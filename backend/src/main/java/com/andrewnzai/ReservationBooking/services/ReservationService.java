@@ -73,6 +73,7 @@ public class ReservationService {
         for(Reservation reservation: reservations){
             ReservationDto reservationDto = new ReservationDto();
 
+            reservationDto.setId(reservation.getId());
             reservationDto.setCheckIn(reservation.getCheckIn());
             reservationDto.setCheckOut(reservation.getCheckOut());
             reservationDto.setDays(ChronoUnit.DAYS.between(reservation.getCheckIn(), reservation.getCheckOut()));
@@ -104,6 +105,17 @@ public class ReservationService {
 
         return true;
 
+    }
+
+    public void deleteReservation(Long id) throws Exception{
+        Reservation reservation = reservationRepository.findById(id).orElseThrow();
+        User user = authService.getCurrentUser();
+
+        if(reservation.getReserver().equals(user)){
+            reservationRepository.delete(reservation);
+        }else{
+            throw new Exception("Could not delete reervation");
+        }
     }
 
    
