@@ -47,4 +47,20 @@ export default class ReservationService{
                 }
             )
     }
+
+    deleteReservation(id: number){
+        return ApiInterceptor.post("reservation/delete", id)
+            .then(
+                (response) => {
+                    if(response.data.data){
+                        toast.error("Could not delete the reservation");
+                        this.navigate("/");
+                    }
+                    else{
+                        toast.success("Successfully deleted the reservation");
+                        this.navigate("/");
+                    }
+                }
+            )
+    }
 }

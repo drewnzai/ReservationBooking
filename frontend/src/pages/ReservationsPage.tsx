@@ -1,11 +1,38 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Reservation } from "../models/Reservation";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
+import { useState } from "react";
+import ReservationService from "../services/ReservationService.service";
 
 export default function ReservationPage(){
     const navigate = useNavigate();
     const location = useLocation();
     const {reservations} = location.state as { reservations: Reservation[] };
+    const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null);
+    const [open, setOpen] = useState(false);
+    const reservationService = new ReservationService();
+
+    const handleDeleteClick = (reservation: Reservation) => {
+        setSelectedReservation(reservation);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+    setOpen(false);
+    setSelectedReservation(null);
+    };
+
+    const handleDeleteConfirm = () => {
+        if (selectedReservation) {
+          reservationService.deleteReservation(selectedReservation.id)
+            .then(() => {
+              handleClose();
+            })
+            .catch(error => {
+              console.error('Error deleting reservation:', error);
+            });
+        }
+    };
 
     return(
         <Box p={3}>
@@ -40,8 +67,36 @@ export default function ReservationPage(){
                     <Typography variant="body2">
                         Room: {reservation.roomType}
                     </Typography>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => handleDeleteClick(reservation)}> 
+                            Delete
+                    </Button>
                 </Box>
             ))}
+
+    <Dialog
+            open={open}
+            onClose={handleClose}
+        >
+            <DialogTitle>
+            Delete Reservation
+            </DialogTitle>
+            <DialogContent>
+            <DialogContentText>
+                Are you sure you want to delete this reservation? This action cannot be undone.
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleClose} color="primary">
+                Cancel
+            </Button>
+            <Button onClick={handleDeleteConfirm} color="secondary">
+                Delete
+            </Button>
+            </DialogActions>
+    </Dialog>
         </Box>
     );
 }

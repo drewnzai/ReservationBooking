@@ -1,4 +1,5 @@
 export interface Reservation {
+    id: number;
     days: number;
     roomType: string;
     total: number;
