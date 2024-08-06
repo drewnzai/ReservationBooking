@@ -10,6 +10,7 @@ import Entrypoint from './pages/Entrypoint';
 import Home from './pages/Home';
 import Available from './pages/Available';
 import Reserve from './pages/Reserve';
+import ReservationPage from './pages/ReservationsPage';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/available" element={<Available/>}/>
         <Route path="/reserve" element={<Reserve/>}/>
+        <Route path='/reservations' element={<ReservationPage/>}/>
         </Route>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
