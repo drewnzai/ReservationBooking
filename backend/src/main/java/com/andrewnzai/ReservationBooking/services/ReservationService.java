@@ -64,6 +64,28 @@ public class ReservationService {
         return reservationDtos;
     }
 
+    public List<ReservationDto> getAllReservations(){
+        User user = authService.getCurrentUser();
+
+        List<ReservationDto> reservationDtos = new ArrayList<>();
+        List<Reservation> reservations = reservationRepository.findAllByReserver(user);
+
+        for(Reservation reservation: reservations){
+            ReservationDto reservationDto = new ReservationDto();
+
+            reservationDto.setCheckIn(reservation.getCheckIn());
+            reservationDto.setCheckOut(reservation.getCheckOut());
+            reservationDto.setDays(ChronoUnit.DAYS.between(reservation.getCheckIn(), reservation.getCheckOut()));
+            reservationDto.setOccupants(reservation.getOccupants());
+            reservationDto.setRoomType(reservation.getRoom().getRoomType().name());
+            reservationDto.setTotal(reservation.getTotal());
+
+            reservationDtos.add(reservationDto);
+        }
+
+        return reservationDtos;
+    }
+
     public boolean makeReservation(ReservationDto reservationDto){
         User user = authService.getCurrentUser();
 
@@ -76,6 +98,7 @@ public class ReservationService {
         reservation.setOccupants(reservationDto.getOccupants());
         reservation.setReserver(user);
         reservation.setRoom(room);
+        reservation.setTotal(reservationDto.getTotal());
 
         reservationRepository.save(reservation);
 

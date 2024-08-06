@@ -1,6 +1,8 @@
 package com.andrewnzai.ReservationBooking.repositories;
 
 import com.andrewnzai.ReservationBooking.models.Reservation;
+import com.andrewnzai.ReservationBooking.models.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,4 +15,6 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     @Query("SELECT r FROM Reservation r WHERE r.checkIn < :toDate AND r.checkOut > :fromDate")
     List<Reservation> findOverlappingReservations(@Param("fromDate") LocalDate fromDate, @Param("toDate") LocalDate toDate);
+
+    List<Reservation> findAllByReserver(User user);
 }

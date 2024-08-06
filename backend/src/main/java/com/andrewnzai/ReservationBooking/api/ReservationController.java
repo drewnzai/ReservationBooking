@@ -5,6 +5,8 @@ import com.andrewnzai.ReservationBooking.dtos.ReservationDto;
 import com.andrewnzai.ReservationBooking.dtos.ReservationRequest;
 import com.andrewnzai.ReservationBooking.services.ReservationService;
 import lombok.AllArgsConstructor;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +34,10 @@ public class ReservationController {
         catch(Exception e){
             return APIResponse.builder().data("Couldn't make the reservation. try again").build();
         }
+    }
+
+    @GetMapping()
+    public List<ReservationDto> getReservations(){
+        return reservationService.getAllReservations();
     }
 }
