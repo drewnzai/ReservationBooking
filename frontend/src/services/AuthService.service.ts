@@ -43,6 +43,10 @@ export default class AuthService{
         )
     }
 
+    logout(){
+        localStorage.removeItem("reservation_user");
+    }
+
     getCurrentUsername(){
         const userStr = localStorage.getItem("reservation_user");
         if(userStr){

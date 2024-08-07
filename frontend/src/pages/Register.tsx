@@ -118,7 +118,7 @@ export default function Register(){
               <Box display="flex" justifyContent="center">
                 <Typography variant="body2">
                   Already have an existing account? <Link
-                  to={"/register"}
+                  to={"/login"}
                   >
                   Login Here
                   </Link>

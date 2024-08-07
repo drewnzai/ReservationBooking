@@ -10,11 +10,13 @@ import ReservationService from "../services/ReservationService.service";
 import {Link, useNavigate} from "react-router-dom";
 import {Reservation} from "../models/Reservation.ts";
 import { useEffect, useState } from "react";
+import AuthService from "../services/AuthService.service.ts";
 
 export default function Home(){
     const reservationService = new ReservationService();
     const navigate = useNavigate();
     const [reservations, setReservations] = useState<Reservation[]>([]);
+    const authService = new AuthService();
 
     const initialValues: ReservationRequest = {
         guestsNo: 1,
@@ -58,6 +60,17 @@ export default function Home(){
         width={{ xs: '90%', sm: '400px' }}
         p={3}
       >
+        <Button 
+        variant="contained"
+        sx={{
+          backgroundColor: "red"
+          }}
+        onClick={() => {
+          authService.logout();
+          navigate("/login");
+        }}>
+          Log out
+        </Button>
         {reservations.length > 0 && (
                     <Link
                     to={"/reservations"}
