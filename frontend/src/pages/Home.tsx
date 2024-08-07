@@ -7,7 +7,7 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {Box, Button, Card, CardContent, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import {ReservationRequest} from "../models/ReservationRequest";
 import ReservationService from "../services/ReservationService.service";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Reservation} from "../models/Reservation.ts";
 import { useEffect, useState } from "react";
 
@@ -37,10 +37,6 @@ export default function Home(){
             );
     };
 
-    const handleCardClick = () => {
-      navigate("/reservations", { state: { reservations } });
-  };
-
     useEffect(() => {
       // Fetch user's reservations on component mount
       reservationService.getReservations()
@@ -63,13 +59,22 @@ export default function Home(){
         p={3}
       >
         {reservations.length > 0 && (
-                    <Card sx={{ mb: 3 }} onClick={handleCardClick}>
+                    <Link
+                    to={"/reservations"}
+                    state={reservations}
+                    style={{
+                      textDecoration: "none"
+                    }}
+                    >
+                    
+                    <Card sx={{ mb: 3 }}>
                         <CardContent>
                             <Typography variant="h6">
                                 You have {reservations.length} reservation(s)
                             </Typography>
                         </CardContent>
                     </Card>
+                    </Link>
                 )}
 
         <Formik

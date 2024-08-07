@@ -7,7 +7,7 @@ import ReservationService from "../services/ReservationService.service";
 export default function ReservationPage(){
     const navigate = useNavigate();
     const location = useLocation();
-    const {reservations} = location.state as { reservations: Reservation[] };
+    const reservations: Reservation[] = location.state;
     const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null);
     const [open, setOpen] = useState(false);
     const reservationService = new ReservationService();
