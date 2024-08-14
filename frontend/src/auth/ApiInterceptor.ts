@@ -60,6 +60,9 @@ ApiInterceptor.interceptors.response.use(
                     return axios(originalRequest);
                   }
                 }
+                else{
+                  window.location.href = "/login";
+                }
                 
                 
                 // Retry the original request with the new token

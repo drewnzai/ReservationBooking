@@ -89,24 +89,30 @@ public class ReservationService {
         return reservationDtos;
     }
 
-    public boolean makeReservation(ReservationDto reservationDto){
-        User user = authService.getCurrentUser();
+    public boolean makeReservation(ReservationDto reservationDto) throws Exception{
+        if(reservationDto.getCheckIn().isBefore(reservationDto.getCheckOut())){
 
-        RoomType roomType = RoomType.valueOf(reservationDto.getRoomType());
-        Room room = roomRepository.findByRoomType(roomType);
-
-        Reservation reservation = new Reservation();
-        reservation.setCheckIn(reservationDto.getCheckIn());
-        reservation.setCheckOut(reservationDto.getCheckOut());
-        reservation.setOccupants(reservationDto.getOccupants());
-        reservation.setReserver(user);
-        reservation.setRoom(room);
-        reservation.setTotal(reservationDto.getTotal());
-        reservation.setReservationDate(LocalDate.now());
-
-        reservationRepository.save(reservation);
-
-        return true;
+            User user = authService.getCurrentUser();
+    
+            RoomType roomType = RoomType.valueOf(reservationDto.getRoomType());
+            Room room = roomRepository.findByRoomType(roomType);
+    
+            Reservation reservation = new Reservation();
+            reservation.setCheckIn(reservationDto.getCheckIn());
+            reservation.setCheckOut(reservationDto.getCheckOut());
+            reservation.setOccupants(reservationDto.getOccupants());
+            reservation.setReserver(user);
+            reservation.setRoom(room);
+            reservation.setTotal(reservationDto.getTotal());
+            reservation.setReservationDate(LocalDate.now());
+    
+            reservationRepository.save(reservation);
+    
+            return true;
+        }
+        else{
+            throw new Exception("Invalid dates");
+        }
 
     }
 

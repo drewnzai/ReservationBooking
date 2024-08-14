@@ -67,6 +67,9 @@ export default function ReservationPage(){
                     <Typography variant="body2">
                         Room: {reservation.roomType}
                     </Typography>
+                    <Typography variant="body2">
+                        Date Made: {reservation.reservationDate}
+                    </Typography>
                     <Button
                         variant="contained"
                         color="secondary"

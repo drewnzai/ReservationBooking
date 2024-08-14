@@ -6,4 +6,5 @@ export interface Reservation {
     occupants: number;
     checkIn: string;
     checkOut: string;
+    reservationDate: string;
 }

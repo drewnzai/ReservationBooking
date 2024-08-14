@@ -32,7 +32,7 @@ public class ReservationController {
             return reservationService.makeReservation(reservationDto);
         }
         catch(Exception e){
-            return APIResponse.builder().data("Couldn't make the reservation. try again").build();
+            return APIResponse.builder().data("Couldn't make the reservation due to: " + e.getMessage() + " . try again").build();
         }
     }
 
