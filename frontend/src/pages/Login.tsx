@@ -4,11 +4,14 @@ import {Formik} from "formik";
 import * as yup from "yup"
 import {Box, Button, TextField, Typography, useTheme} from "@mui/material";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Loading from "../components/Loading";
 
 export default function Login(){
 
     const theme = useTheme();
-    
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const authService = new AuthService();
 
     const initialValues: LoginRequest = {
@@ -17,6 +20,7 @@ export default function Login(){
     }
 
     const handleFormSubmit = (values: LoginRequest) => {
+        setIsLoading(true);
         authService.login(values);
     };
 
@@ -27,6 +31,10 @@ export default function Login(){
     });
 
     return(
+
+      <>
+      
+      { isLoading? <Loading/> :
         <Box
       display="flex"
       alignItems="center"
@@ -105,6 +113,8 @@ export default function Login(){
         </Formik>
       </Box>
     </Box>
-    );
+}    
+      </>
+);
 
 }

@@ -4,41 +4,49 @@ import {RegisterRequest} from "../models/RegisterRequest";
 import {Formik} from "formik";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
+import { useState } from "react";
 
 export default function Register(){
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const authService = new AuthService();
+  const authService = new AuthService();
 
-    const initialValues = {
-        password: "",
-        confirmedPassword: "",
-        email: ""
-    };
+  const initialValues = {
+    password: "",
+    confirmedPassword: "",
+    email: ""
+  };
 
-    const handleFormSubmit = (values: any) => {
-        
-       const registerRequest: RegisterRequest = {
-                password: values.confirmedPassword,
-                email: values.email,
-                role: "ROLE_USER"
-            };
-            
-            authService.signup(registerRequest); 
-    };
+  const handleFormSubmit = (values: any) => {
+    
+    setIsLoading(true);
 
-    const checkoutSchema = yup.object().shape({
-        email: yup.string().email('Invalid email format').required('Required'),
-        password: yup.string().required('Required'),
-        confirmedPassword: yup.string()
-        .oneOf([yup.ref('password'), undefined], 'Passwords must match')
-        .required('Required')
+    const registerRequest: RegisterRequest = {
+            password: values.confirmedPassword,
+            email: values.email,
+            role: "ROLE_USER"
+        };
 
-    });
+    authService.signup(registerRequest); 
+  };
+
+  const checkoutSchema = yup.object().shape({
+    email: yup.string().email('Invalid email format').required('Required'),
+    password: yup.string().required('Required'),
+    confirmedPassword: yup.string()
+    .oneOf([yup.ref('password'), undefined], 'Passwords must match')
+    .required('Required')
+
+  });
 
 
 
     return(
+
+      <>
+      {isLoading? <Loading/> :
         <Box
       display="flex"
       alignItems="center"
@@ -128,6 +136,7 @@ export default function Register(){
           )}
         </Formik>
       </Box>
-    </Box>
+    </Box>}
+      </>
     );
 }
