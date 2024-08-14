@@ -12,6 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Room {
+    public Room(RoomType roomType, Long price, Integer accommodates, Integer available) {
+        this.roomType = roomType;
+        this.price = price;
+        this.accommodates = accommodates;
+        this.available = available;
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
