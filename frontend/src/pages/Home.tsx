@@ -11,11 +11,13 @@ import {Link, useNavigate} from "react-router-dom";
 import {Reservation} from "../models/Reservation.ts";
 import { useEffect, useState } from "react";
 import AuthService from "../services/AuthService.service.ts";
+import { Dayjs } from "dayjs";
 
 export default function Home(){
     const reservationService = new ReservationService();
     const navigate = useNavigate();
     const [reservations, setReservations] = useState<Reservation[]>([]);
+    const [minDate, setMinDate] = useState<Dayjs>();
     const authService = new AuthService();
 
     const initialValues: ReservationRequest = {
@@ -143,7 +145,8 @@ export default function Home(){
                           const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
                             .toString()
                             .padStart(2, '0')}/${date.getFullYear()}`;
-                          values.fromDate = formattedDate;
+                            setMinDate(newValue);
+                            values.fromDate = formattedDate;
                         }
                       }}
                       slots={{
@@ -164,7 +167,7 @@ export default function Home(){
                   <DemoContainer components={['DatePicker']}>
                     <DatePicker
                       label="To"
-                      disablePast
+                      minDate={minDate}
                       onChange={(newValue) => {
                         if (newValue) {
                           const date = newValue.toDate();
