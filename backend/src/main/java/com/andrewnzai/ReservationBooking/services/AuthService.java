@@ -62,7 +62,7 @@ public class AuthService {
                     new NotificationEmail("Account Verification",
                             user.getEmail(),
                             "Thank you for signing up to Reservation Booking, " +
-                                    "please click on the below url to activate your account: " +
+                                    "please click on the below url to activate your account, the token will expire after an hour: " +
                                     "http://localhost:8080/api/auth/accountVerification/" + token)
             );
 
@@ -81,13 +81,18 @@ public class AuthService {
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setToken(token);
         verificationToken.setUser(user);
+        verificationToken.setExpiryDate(Instant.now().plusSeconds(3600));
 
         verificationTokenRepository.save(verificationToken);
         return token;
     }
 
-    public void verifyAccount(String token) {
+    public void verifyAccount(String token) throws Exception{
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
+        if(Instant.now().isAfter(verificationToken.getExpiryDate())){
+            log.error("Verification Token is expired");
+            throw new Exception("Verification Token is expired");
+        }
         fetchUserAndEnable(verificationToken);
     }
 
