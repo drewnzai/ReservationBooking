@@ -31,6 +31,7 @@ public class Reservation {
     @ManyToOne
     private Room room;
     private Long total;
+    private LocalDate reservationDate;
 
     @PrePersist
     @PreUpdate

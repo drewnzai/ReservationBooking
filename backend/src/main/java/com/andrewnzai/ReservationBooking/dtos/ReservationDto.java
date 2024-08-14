@@ -17,4 +17,5 @@ public class ReservationDto {
     private Integer occupants;
     private LocalDate checkIn;
     private LocalDate checkOut;
+    private LocalDate reservationDate;
 }

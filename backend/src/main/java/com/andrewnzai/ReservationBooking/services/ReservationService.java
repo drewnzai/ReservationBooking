@@ -11,6 +11,7 @@ import com.andrewnzai.ReservationBooking.repositories.RoomRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,6 +81,7 @@ public class ReservationService {
             reservationDto.setOccupants(reservation.getOccupants());
             reservationDto.setRoomType(reservation.getRoom().getRoomType().name());
             reservationDto.setTotal(reservation.getTotal());
+            reservationDto.setReservationDate(reservation.getReservationDate());
 
             reservationDtos.add(reservationDto);
         }
@@ -100,6 +102,7 @@ public class ReservationService {
         reservation.setReserver(user);
         reservation.setRoom(room);
         reservation.setTotal(reservationDto.getTotal());
+        reservation.setReservationDate(LocalDate.now());
 
         reservationRepository.save(reservation);
 
