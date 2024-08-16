@@ -40,7 +40,11 @@ public class MailService {
         try {
             mailSender.send(messagePreparator);
         } catch (MailException e) {
+<<<<<<< HEAD
             throw new Exception("Could not send mail to " + notificationEmail.getRecipient() + " verify it's existence", e);
+=======
+            throw new Exception("Could not send mail to " + notificationEmail.getRecipient() + " check the email's validity", e);
+>>>>>>> main
         }
     }
 }
