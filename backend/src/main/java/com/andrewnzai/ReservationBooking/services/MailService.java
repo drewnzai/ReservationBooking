@@ -1,7 +1,9 @@
 package com.andrewnzai.ReservationBooking.services;
 
 import com.andrewnzai.ReservationBooking.emails.NotificationEmail;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -12,11 +14,13 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MailService {
 
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
+    @Value("${spring.mail.username}")
+    private String emailAddress;
 
     private String build(String message) {
         Context context = new Context();
@@ -28,7 +32,7 @@ public class MailService {
     public void sendMail(NotificationEmail notificationEmail) throws Exception {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("reservationbooking@email.com");
+            messageHelper.setFrom(emailAddress);
             messageHelper.setTo(notificationEmail.getRecipient());
             messageHelper.setSubject(notificationEmail.getSubject());
             messageHelper.setText(build(notificationEmail.getBody()));
@@ -36,7 +40,7 @@ public class MailService {
         try {
             mailSender.send(messagePreparator);
         } catch (MailException e) {
-            throw new Exception("Exception occurred when sending mail to " + notificationEmail.getRecipient(), e);
+            throw new Exception("Could not send mail to " + notificationEmail.getRecipient() + " verify it's existence", e);
         }
     }
 }
