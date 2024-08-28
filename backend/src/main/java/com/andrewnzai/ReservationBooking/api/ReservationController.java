@@ -36,10 +36,16 @@ public class ReservationController {
         }
     }
 
-    @GetMapping()
+    @GetMapping("/all")
     public List<ReservationDto> getReservations(){
         return reservationService.getAllReservations();
     }
+
+    @GetMapping("/user")
+    public List<ReservationDto> getReservationsByUser(){
+        return reservationService.getAllReservationsByUser();
+    }
+
 
     @PostMapping("/delete")
     public Object deleteReservation(@RequestBody ReservationDto reservationDto){

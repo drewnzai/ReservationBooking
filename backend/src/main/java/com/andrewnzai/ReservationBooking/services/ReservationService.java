@@ -66,11 +66,13 @@ public class ReservationService {
     }
 
     public List<ReservationDto> getAllReservations(){
-        User user = authService.getCurrentUser();
+        List<Reservation> reservations = reservationRepository.findAll();
 
+        return mapToDtos(reservations);
+    }
+
+    private List<ReservationDto> mapToDtos(List<Reservation> reservations) {
         List<ReservationDto> reservationDtos = new ArrayList<>();
-        List<Reservation> reservations = reservationRepository.findAllByReserver(user);
-
         for(Reservation reservation: reservations){
             ReservationDto reservationDto = new ReservationDto();
 
@@ -87,6 +89,14 @@ public class ReservationService {
         }
 
         return reservationDtos;
+    }
+
+    public List<ReservationDto> getAllReservationsByUser(){
+        User user = authService.getCurrentUser();
+
+        List<Reservation> reservations = reservationRepository.findAllByReserver(user);
+
+        return mapToDtos(reservations);
     }
 
     public boolean makeReservation(ReservationDto reservationDto) throws Exception{
