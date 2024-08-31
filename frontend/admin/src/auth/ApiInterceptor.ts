@@ -9,12 +9,12 @@ const ApiInterceptor = axios.create({
 ApiInterceptor.interceptors.request.use(
   
     (config) => {
-        const userStr = localStorage.getItem("reservation_user");
+        const userStr = localStorage.getItem("reservation_admin");
         
         if(userStr){
-        const reservation_user = JSON.parse(userStr);
+        const reservation_admin = JSON.parse(userStr);
 
-        const token = reservation_user.authenticationToken;
+        const token = reservation_admin.authenticationToken;
         
         if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -36,25 +36,25 @@ ApiInterceptor.interceptors.response.use(
   
         try {
 
-            const userStr = localStorage.getItem("reservation_user");
+            const userStr = localStorage.getItem("reservation_admin");
             if(userStr){
-                const reservation_user = JSON.parse(userStr);
+                const reservation_admin = JSON.parse(userStr);
 
                 const refreshTokenRequest: RefreshTokenRequest = {
-                    email: reservation_user.email,
-                    refreshToken: reservation_user.refreshToken
+                    email: reservation_admin.email,
+                    refreshToken: reservation_admin.refreshToken
                 }
 
                 const response = await axios.post("http://localhost:8080/api/auth/refresh", refreshTokenRequest);
                 
                 if(response.data.data){
-                  localStorage.removeItem("reservation_user");
+                  localStorage.removeItem("reservation_admin");
                   window.location.href = "/login";
                   }
                   else{
                     const refreshedUser = response.data;
                     
-                    localStorage.setItem("reservation_user", JSON.stringify(refreshedUser));
+                    localStorage.setItem("reservation_admin", JSON.stringify(refreshedUser));
                     
                     originalRequest.headers.Authorization = `Bearer ${refreshedUser.authenticationToken}`;
                     return axios(originalRequest);
