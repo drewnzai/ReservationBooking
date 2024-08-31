@@ -2,6 +2,8 @@ import {CssBaseline, ThemeProvider} from '@mui/material';
 import { ColorModeContext, useMode } from './theme'
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from 'react-toastify';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import Home from './pages/Home';
 
 
 function App() {
@@ -17,6 +19,13 @@ function App() {
     {/* @ts-ignore */}
     <ThemeProvider theme={theme}>
       <CssBaseline/>
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+        </Routes>
+      
+      </BrowserRouter>
       
       <ToastContainer
         position="top-right"
