@@ -84,6 +84,7 @@ public class ReservationService {
             reservationDto.setRoomType(reservation.getRoom().getRoomType().name());
             reservationDto.setTotal(reservation.getTotal());
             reservationDto.setReservationDate(reservation.getReservationDate());
+            reservationDto.setReserver(reservation.getReserver().getEmail());
 
             reservationDtos.add(reservationDto);
         }

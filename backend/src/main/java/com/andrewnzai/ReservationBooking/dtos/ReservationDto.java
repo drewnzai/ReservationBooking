@@ -18,4 +18,5 @@ public class ReservationDto {
     private LocalDate checkIn;
     private LocalDate checkOut;
     private LocalDate reservationDate;
+    private String reserver;
 }

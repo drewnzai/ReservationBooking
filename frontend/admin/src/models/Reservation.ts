@@ -7,4 +7,5 @@ export interface Reservation {
     checkIn: string;
     checkOut: string;
     reservationDate: string;
+    reserver: string;
 }
