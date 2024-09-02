@@ -2,11 +2,11 @@ import {Navigate, Outlet} from "react-router-dom";
 
 export default function Entrypoint(){
     
-    const reservation_user: any | null = localStorage.getItem("reservation_admin");
+    const reservation_admin: any | null = localStorage.getItem("reservation_admin");
     
 
     return(
-       reservation_user? 
+       reservation_admin? 
        
        <div className="app">
             <main className="content">
