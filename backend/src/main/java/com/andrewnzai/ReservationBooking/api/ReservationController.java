@@ -46,6 +46,16 @@ public class ReservationController {
         return reservationService.getAllReservationsByUser();
     }
 
+    @PostMapping("/modifyrequest")
+    public Object modifyReservation(@RequestBody ReservationDto reservationDto){
+        try{
+            return reservationService.modifyReservationRequest(reservationDto);
+        }
+        catch(Exception e){
+            return APIResponse.builder().data("Cannot modify the reservation, try again or make a  new reservation").build();
+        }
+    }
+
 
     @PostMapping("/delete")
     public Object deleteReservation(@RequestBody ReservationDto reservationDto){

@@ -8,6 +8,8 @@ import com.andrewnzai.ReservationBooking.models.Room;
 import com.andrewnzai.ReservationBooking.models.User;
 import com.andrewnzai.ReservationBooking.repositories.ReservationRepository;
 import com.andrewnzai.ReservationBooking.repositories.RoomRepository;
+import com.andrewnzai.ReservationBooking.repositories.UserRepository;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -127,6 +129,22 @@ public class ReservationService {
 
     }
 
+    public ReservationDto modifyReservationRequest(ReservationDto reservationDto){
+        Reservation reservation = reservationRepository.findById(reservationDto.getId()).get();
+
+        long days = ChronoUnit.DAYS.between(reservationDto.getCheckIn(), reservationDto.getCheckOut());
+
+        reservation.setCheckIn(reservationDto.getCheckIn());
+        reservation.setCheckOut(reservationDto.getCheckOut());
+        reservation.setOccupants(reservationDto.getOccupants());
+        
+        reservation.setTotal(reservationDto.getTotal());
+        reservation.setReservationDate(LocalDate.now());
+    
+            reservationRepository.save(reservation);
+    
+    }
+
     public void deleteReservation(Long id) throws Exception{
         Reservation reservation = reservationRepository.findById(id).orElseThrow();
         User user = authService.getCurrentUser();
@@ -134,7 +152,7 @@ public class ReservationService {
         if(reservation.getReserver().equals(user)){
             reservationRepository.delete(reservation);
         }else{
-            throw new Exception("Could not delete reervation");
+            throw new Exception("Could not delete reservation");
         }
     }
 
