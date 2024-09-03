@@ -9,14 +9,28 @@ import { useNavigate } from "react-router-dom";
 
 const localizer = momentLocalizer(moment);
 
+interface CalendarEvent extends Reservation {
+    start: Date;
+    end: Date;
+  }
+
+
+const EventComponent = ({ event }: {event: any}) => {
+    return (
+        <span style={{ color: "black" }}>
+        <strong>{event.title}</strong>
+        </span>
+);
+};
+  
 export default function Home(){
-    const [reservations, setReservations] = useState<Reservation[]>([]);
+    const [reservations, setReservations] = useState<CalendarEvent[]>([]);
     const reservationService = new ReservationService();
     const navigate = useNavigate();
 
     useEffect(() => {
         reservationService.getAllReservations()
-            .then((response: Reservation[]) => {
+            .then((response: CalendarEvent[]) => {
                 
                 const data = response.map(reservation => ({
                     ...reservation,
@@ -35,15 +49,25 @@ export default function Home(){
       };
 
     return(
-        <Box>
+        <Box 
+        sx={{
+            padding: "20px",
+            backgroundColor: "#f7f7f7"
+        }}
+        >
             <Calendar
         localizer={localizer}
         events={reservations}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500 }}
+        style={{ height: 650,
+            color: "black"
+         }}
         onSelectEvent={handleSelectEvent}
         views={['month', 'week', 'day']}
+        components={{
+            event: EventComponent  // Use custom event component
+          }}
         defaultView="month"
       />
         </Box>
