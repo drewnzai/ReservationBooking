@@ -1,35 +1,37 @@
-import { Box, Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
-import axios from "axios";
+import { Box, Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Dayjs } from "dayjs";
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Reservation } from "../models/Reservation";
+import ReservationService from "../services/ReservationService.service";
+
 
 export default function ReservationDetail(){
     const location = useLocation();
     const navigate = useNavigate();
     const reservation: Reservation = location.state.reservation;
+    const reservationService = new ReservationService();
+    const [minDate, setMinDate] = useState<Dayjs>();
   
     const [open, setOpen] = useState(false);
     const [editedReservation, setEditedReservation] = useState(reservation);
   
-    // Handle input changes
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: any) => {
+      const { name, value } = e.target;
       setEditedReservation({
         ...editedReservation,
-        [e.target.name]: e.target.value,
+        [name]: value,
       });
     };
   
     // Handle save changes
     const handleSave = () => {
-      axios.put(`/api/reservations/${reservation.id}`, editedReservation)
-        .then(() => {
-          alert("Reservation updated successfully!");
-          navigate("/");
-        })
-        .catch((error) => {
-          console.error("Error updating reservation:", error);
-        });
+     
+      console.log(editedReservation);
     };
   
     // Handle delete confirmation dialog
@@ -37,77 +39,93 @@ export default function ReservationDetail(){
       setOpen(true);
     };
   
+    const handleCloseDialog = () => {
+        setOpen(false);
+      };
+
     const handleClose = () => {
-      setOpen(false);
+    navigate("/");
     };
+    
   
     const handleDelete = () => {
-      axios.delete(`/api/reservations/${reservation.id}`)
-        .then(() => {
-          alert("Reservation deleted successfully!");
-          navigate("/");
-        })
-        .catch((error) => {
-          console.error("Error deleting reservation:", error);
-        });
+      reservationService.deleteReservation(reservation);
     };
-  
+
+
     return (
       <Box padding={2}>
         <Typography variant="h4" gutterBottom>
           Reservation Details
         </Typography>
         <TextField
-          label="Reserver"
-          name="reserver"
-          value={editedReservation.reserver}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
           label="Room Type"
           name="roomType"
           value={editedReservation.roomType}
           onChange={handleChange}
           fullWidth
+          InputProps={{
+            readOnly: true,
+          }}
           margin="normal"
         />
-        <TextField
-          label="Check-In Date"
-          name="checkIn"
-          value={editedReservation.checkIn}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Check-Out Date"
-          name="checkOut"
-          value={editedReservation.checkOut}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Occupants"
-          name="occupants"
-          type="number"
-          value={editedReservation.occupants}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Total Cost"
-          name="total"
-          type="number"
-          value={editedReservation.total}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-  
+        <Box mb={3}>
+             <LocalizationProvider dateAdapter={AdapterDayjs}>
+               <DemoContainer components={['DatePicker']}>
+                 <DatePicker
+                   label="From"
+                   disablePast
+                   onChange={(newValue) => {
+                     if (newValue) {
+                       const date = newValue.toDate();
+                       const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
+                         .toString()
+                         .padStart(2, '0')}/${date.getFullYear()}`;
+                         setMinDate(newValue);
+                         editedReservation.checkIn = formattedDate;
+                     }
+                   }}
+                 />
+               </DemoContainer>
+             </LocalizationProvider>
+           </Box>
+           <Box mb={3}>
+             <LocalizationProvider dateAdapter={AdapterDayjs}>
+               <DemoContainer components={['DatePicker']}>
+                 <DatePicker
+                   label="To"
+                   disablePast
+                   minDate={minDate}
+                   onChange={(newValue) => {
+                     if (newValue) {
+                       const date = newValue.toDate();
+                       const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
+                         .toString()
+                         .padStart(2, '0')}/${date.getFullYear()}`;
+                       editedReservation.checkOut = formattedDate;
+                     }
+                   }}
+                 />
+               </DemoContainer>
+             </LocalizationProvider>
+           </Box>
+           
+               <InputLabel id="guests-number-label">Number of Guests</InputLabel>
+               <Select
+                 labelId="guests-number-label"
+                 value={editedReservation.occupants}
+                 label="Number of Occupants"
+                 name="occupants"
+                 onChange={handleChange}
+               >
+                 <MenuItem value={1}>1</MenuItem>
+                 <MenuItem value={2}>2</MenuItem>
+                 <MenuItem value={3}>3</MenuItem>
+                 <MenuItem value={4}>4</MenuItem>
+                 <MenuItem value={5}>5</MenuItem>
+                 <MenuItem value={6}>6</MenuItem>
+               </Select>
+        
         <Box mt={2}>
           <Button variant="contained" color="primary" onClick={handleSave}>
             Save Changes
@@ -120,11 +138,19 @@ export default function ReservationDetail(){
           >
             Delete Reservation
           </Button>
+          <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleClose}
+          style={{ marginLeft: "10px" }}
+        >
+          Close
+        </Button>
         </Box>
   
         <Dialog
           open={open}
-          onClose={handleClose}
+          onClose={handleCloseDialog}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -135,7 +161,7 @@ export default function ReservationDetail(){
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleCloseDialog} color="primary">
               Cancel
             </Button>
             <Button onClick={handleDelete} color="secondary" autoFocus>
