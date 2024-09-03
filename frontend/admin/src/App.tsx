@@ -6,6 +6,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Home from './pages/Home';
 import Entrypoint from './pages/Entrypoint';
 import Login from './pages/Login';
+import ReservationDetail from './pages/ReservationDetail';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route element={<Entrypoint/>}>
           <Route path="/" element={<Home/>}/>
+          <Route path="/reservation/:id" element={<ReservationDetail />} />
           </Route>
 
           <Route path="/login" element={<Login/>}/>
