@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Entrypoint from './pages/Entrypoint';
 import Login from './pages/Login';
 import ReservationDetail from './pages/ReservationDetail';
+import Complete from './pages/Complete';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route element={<Entrypoint/>}>
           <Route path="/" element={<Home/>}/>
           <Route path="/reservation/:id" element={<ReservationDetail />} />
+          <Route path="/reservation/complete/:id" element={<Complete/>}/>
           </Route>
 
           <Route path="/login" element={<Login/>}/>
