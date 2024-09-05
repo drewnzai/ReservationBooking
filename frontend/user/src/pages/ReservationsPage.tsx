@@ -1,7 +1,16 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { Reservation } from "../models/Reservation";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
-import { useState } from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {Reservation} from "../models/Reservation";
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Typography
+} from "@mui/material";
+import {useState} from "react";
 import ReservationService from "../services/ReservationService.service";
 
 export default function ReservationPage(){

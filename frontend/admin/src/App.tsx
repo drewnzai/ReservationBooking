@@ -1,5 +1,5 @@
 import {CssBaseline, ThemeProvider} from '@mui/material';
-import { ColorModeContext, useMode } from './theme'
+import {ColorModeContext, useMode} from './theme'
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from 'react-toastify';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';

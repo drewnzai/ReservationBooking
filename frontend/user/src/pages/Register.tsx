@@ -3,9 +3,9 @@ import AuthService from "../services/AuthService.service";
 import {RegisterRequest} from "../models/RegisterRequest";
 import {Formik} from "formik";
 import * as yup from "yup";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Loading from "../components/Loading";
-import { useState } from "react";
+import {useState} from "react";
 
 export default function Register(){
 

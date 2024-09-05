@@ -2,7 +2,6 @@ package com.andrewnzai.ReservationBooking.services;
 
 import com.andrewnzai.ReservationBooking.emails.NotificationEmail;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;

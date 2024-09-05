@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { Reservation } from "../models/Reservation";
+import {useEffect, useState} from "react";
+import {Reservation} from "../models/Reservation";
 import ReservationService from "../services/ReservationService.service";
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import {Calendar, momentLocalizer} from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import {Box} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 const localizer = momentLocalizer(moment);
 

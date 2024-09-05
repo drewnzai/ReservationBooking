@@ -1,6 +1,5 @@
 package com.andrewnzai.ReservationBooking.dtos;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

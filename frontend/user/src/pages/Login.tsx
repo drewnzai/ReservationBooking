@@ -3,8 +3,8 @@ import AuthService from "../services/AuthService.service";
 import {Formik} from "formik";
 import * as yup from "yup"
 import {Box, Button, TextField, Typography, useTheme} from "@mui/material";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import {Link} from "react-router-dom";
+import {useState} from "react";
 import Loading from "../components/Loading";
 
 export default function Login(){

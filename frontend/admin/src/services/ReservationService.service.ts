@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ApiInterceptor from "../auth/ApiInterceptor";
-import { Reservation } from "../models/Reservation";
-import { toast } from "react-toastify";
+import {Reservation} from "../models/Reservation";
+import {toast} from "react-toastify";
 
 export default class ReservationService{
     private navigate = useNavigate();
