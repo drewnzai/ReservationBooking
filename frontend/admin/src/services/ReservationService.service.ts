@@ -53,6 +53,10 @@ export default class ReservationService{
                         toast.error("Could not modify the reservation, try again with different values");
                         this.navigate("/");
                     }
+                    else{
+                        toast.success("Modified the reservation successfully");
+                        this.navigate("/");
+                    }
                 }
             )
     }
