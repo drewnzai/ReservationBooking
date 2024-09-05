@@ -37,7 +37,7 @@ export default function ReservationDetail(){
         )
     };
   
-    const handleClickOpen = () => {
+     const handleClickOpen = () => {
       setOpen(true);
     };
   
