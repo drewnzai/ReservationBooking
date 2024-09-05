@@ -30,4 +30,30 @@ export default class ReservationService{
                 }
             )
     }
+
+    reservationModificationRequest(reservation: Reservation){
+        return ApiInterceptor.post("reservation/modify-request", reservation)
+            .then(
+                (response) => {
+                    if(response.data.data){
+                        toast.error("Could not modify the reservation, try again with different values");
+                        this.navigate("/");
+                    }
+
+                    return response.data;
+                }
+            )
+    }
+
+    completeModification(reservation: Reservation){
+        return ApiInterceptor.post("complete-modification", reservation)
+            .then(
+                (response) => {
+                    if(response.data.data){
+                        toast.error("Could not modify the reservation, try again with different values");
+                        this.navigate("/");
+                    }
+                }
+            )
+    }
 }
