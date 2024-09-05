@@ -28,12 +28,15 @@ export default function ReservationDetail(){
       });
     };
   
-    // Handle save changes
     const handleSave = () => {
-      
+      reservationService.reservationModificationRequest(editedReservation)
+        .then(
+          (response: Reservation) => {
+            navigate(`/reservation/complete/${editedReservation.id}`, {state: {response}})
+          }
+        )
     };
   
-    // Handle delete confirmation dialog
     const handleClickOpen = () => {
       setOpen(true);
     };
