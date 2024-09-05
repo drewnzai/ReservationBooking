@@ -8,7 +8,6 @@ import com.andrewnzai.ReservationBooking.models.Room;
 import com.andrewnzai.ReservationBooking.models.User;
 import com.andrewnzai.ReservationBooking.repositories.ReservationRepository;
 import com.andrewnzai.ReservationBooking.repositories.RoomRepository;
-import com.andrewnzai.ReservationBooking.repositories.UserRepository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -73,27 +72,7 @@ public class ReservationService {
         return mapToDtos(reservations);
     }
 
-    private List<ReservationDto> mapToDtos(List<Reservation> reservations) {
-        List<ReservationDto> reservationDtos = new ArrayList<>();
-        for(Reservation reservation: reservations){
-            ReservationDto reservationDto = new ReservationDto();
-
-            reservationDto.setId(reservation.getId());
-            reservationDto.setCheckIn(reservation.getCheckIn());
-            reservationDto.setCheckOut(reservation.getCheckOut());
-            reservationDto.setDays(ChronoUnit.DAYS.between(reservation.getCheckIn(), reservation.getCheckOut()));
-            reservationDto.setOccupants(reservation.getOccupants());
-            reservationDto.setRoomType(reservation.getRoom().getRoomType().name());
-            reservationDto.setTotal(reservation.getTotal());
-            reservationDto.setReservationDate(reservation.getReservationDate());
-            reservationDto.setReserver(reservation.getReserver().getEmail());
-
-            reservationDtos.add(reservationDto);
-        }
-
-        return reservationDtos;
-    }
-
+    
     public List<ReservationDto> getAllReservationsByUser(){
         User user = authService.getCurrentUser();
 
@@ -126,23 +105,57 @@ public class ReservationService {
         else{
             throw new Exception("Invalid dates");
         }
-
+        
     }
 
-    public ReservationDto modifyReservationRequest(ReservationDto reservationDto){
-        Reservation reservation = reservationRepository.findById(reservationDto.getId()).get();
+    public ReservationDto modifyReservationRequest(ReservationDto reservationDto) throws Exception{
+        Reservation originalReservation = reservationRepository.findById(reservationDto.getId()).get();
 
         long days = ChronoUnit.DAYS.between(reservationDto.getCheckIn(), reservationDto.getCheckOut());
 
+        Room room = roomRepository.findById(originalReservation.getRoom().getId())
+            .orElseThrow(() -> new RuntimeException("Room not found"));
+
+        List<Reservation> overlappingReservations = reservationRepository.findOverlappingReservations(
+            reservationDto.getCheckIn(), reservationDto.getCheckOut());
+        
+        Map<Long, Integer> reservedRoomCounts = new HashMap<>();
+
+        for (Reservation reservation : overlappingReservations) {
+            reservedRoomCounts.put(reservation.getRoom().getId(), 
+                reservedRoomCounts.getOrDefault(reservation.getRoom().getId(), 0) + 1);
+        }
+
+        int guestsNo = reservationDto.getOccupants();
+        
+        int reservedCount = reservedRoomCounts.getOrDefault(room.getId(), 0);
+        int availableCount = room.getAvailable() - reservedCount;
+        int roomCapacity = room.getAccommodates();
+        int requiredRooms = (int) Math.ceil((double) guestsNo / roomCapacity);
+
+        if (availableCount >= requiredRooms) {
+            long totalCost = room.getPrice() * requiredRooms * days;
+
+            reservationDto.setTotal(totalCost);
+
+            return reservationDto;
+        }
+        else{
+            throw new Exception("Could not make request");
+        }
+    }
+
+    public void completeReservationModification(ReservationDto reservationDto){
+        Reservation reservation = reservationRepository.findById(reservationDto.getId()).get();
+
         reservation.setCheckIn(reservationDto.getCheckIn());
         reservation.setCheckOut(reservationDto.getCheckOut());
-        reservation.setOccupants(reservationDto.getOccupants());
-        
-        reservation.setTotal(reservationDto.getTotal());
         reservation.setReservationDate(LocalDate.now());
-    
-            reservationRepository.save(reservation);
-    
+        reservation.setTotal(reservationDto.getTotal());
+        reservation.setOccupants(reservationDto.getOccupants());
+
+        reservationRepository.save(reservation);
+        
     }
 
     public void deleteReservation(Long id) throws Exception{
@@ -154,7 +167,27 @@ public class ReservationService {
         }else{
             throw new Exception("Could not delete reservation");
         }
-    }
+    }   
 
+    private List<ReservationDto> mapToDtos(List<Reservation> reservations) {
+        List<ReservationDto> reservationDtos = new ArrayList<>();
+        for(Reservation reservation: reservations){
+            ReservationDto reservationDto = new ReservationDto();
+    
+            reservationDto.setId(reservation.getId());
+            reservationDto.setCheckIn(reservation.getCheckIn());
+            reservationDto.setCheckOut(reservation.getCheckOut());
+            reservationDto.setDays(ChronoUnit.DAYS.between(reservation.getCheckIn(), reservation.getCheckOut()));
+            reservationDto.setOccupants(reservation.getOccupants());
+            reservationDto.setRoomType(reservation.getRoom().getRoomType().name());
+            reservationDto.setTotal(reservation.getTotal());
+            reservationDto.setReservationDate(reservation.getReservationDate());
+            reservationDto.setReserver(reservation.getReserver().getEmail());
+    
+            reservationDtos.add(reservationDto);
+        }
+    
+        return reservationDtos;
+    }
    
 }

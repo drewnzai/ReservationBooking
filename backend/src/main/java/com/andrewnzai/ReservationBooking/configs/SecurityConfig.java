@@ -36,6 +36,8 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/api/reservation/all").hasRole("ADMIN")
+                        .requestMatchers("/api/reservation/modify-request").hasRole("ADMIN")
+                        .requestMatchers("/api/reservation/complete-modification").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider).addFilterBefore(

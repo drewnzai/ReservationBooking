@@ -6,6 +6,7 @@ import com.andrewnzai.ReservationBooking.dtos.ReservationRequest;
 import com.andrewnzai.ReservationBooking.services.ReservationService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,13 +47,24 @@ public class ReservationController {
         return reservationService.getAllReservationsByUser();
     }
 
-    @PostMapping("/modifyrequest")
-    public Object modifyReservation(@RequestBody ReservationDto reservationDto){
+    @PostMapping("/modify-request")
+    public Object reservationModificationRequest(@RequestBody ReservationDto reservationDto){
         try{
             return reservationService.modifyReservationRequest(reservationDto);
         }
         catch(Exception e){
             return APIResponse.builder().data("Cannot modify the reservation, try again or make a  new reservation").build();
+        }
+    }
+
+    @PostMapping("/complete-modification")
+    public Object completeModification(@RequestBody ReservationDto reservationDto){
+        try{
+            reservationService.completeReservationModification(reservationDto);
+
+            return ResponseEntity.ok();
+        }catch(Exception e){
+            return APIResponse.builder().data("Could not modify the reservation").build();
         }
     }
 
