@@ -71,7 +71,7 @@ export default function Complete(){
             color="secondary"
             onClick={handleConfirm}
           >
-            Make Reservation
+            Modify Reservation
           </Button>
         </Box>
 
