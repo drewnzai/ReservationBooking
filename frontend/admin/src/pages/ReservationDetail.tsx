@@ -1,4 +1,4 @@
-import { Box, Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, InputLabel, MenuItem, Select } from "@mui/material";
 import { Dayjs } from "dayjs";
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
@@ -30,8 +30,7 @@ export default function ReservationDetail(){
   
     // Handle save changes
     const handleSave = () => {
-     
-      console.log(editedReservation);
+      
     };
   
     // Handle delete confirmation dialog
