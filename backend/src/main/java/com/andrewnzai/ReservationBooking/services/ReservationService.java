@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -118,6 +119,10 @@ public class ReservationService {
 
         List<Reservation> overlappingReservations = reservationRepository.findOverlappingReservations(
             reservationDto.getCheckIn(), reservationDto.getCheckOut());
+        
+        overlappingReservations = overlappingReservations.stream()
+            .filter(reservation -> !reservation.getId().equals(originalReservation.getId()))
+            .collect(Collectors.toList());
         
         Map<Long, Integer> reservedRoomCounts = new HashMap<>();
 

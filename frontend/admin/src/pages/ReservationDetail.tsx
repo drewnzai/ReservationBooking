@@ -32,7 +32,13 @@ export default function ReservationDetail(){
       reservationService.reservationModificationRequest(editedReservation)
         .then(
           (response: Reservation) => {
-            navigate(`/reservation/complete/${editedReservation.id}`, {state: {response}})
+            if(response){
+
+              navigate(`/reservation/complete/${editedReservation.id}`, {state: {response}});
+            }
+            else{
+              navigate("/");
+            }
           }
         )
     };
@@ -80,9 +86,9 @@ export default function ReservationDetail(){
                    onChange={(newValue) => {
                      if (newValue) {
                        const date = newValue.toDate();
-                       const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
-                         .toString()
-                         .padStart(2, '0')}/${date.getFullYear()}`;
+                       const formattedDate = `${date.getFullYear().toString().padStart(2, '0')}-${(date.getMonth() + 1)
+                        .toString()
+                        .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
                          setMinDate(newValue);
                          editedReservation.checkIn = formattedDate;
                      }
@@ -101,9 +107,9 @@ export default function ReservationDetail(){
                    onChange={(newValue) => {
                      if (newValue) {
                        const date = newValue.toDate();
-                       const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
-                         .toString()
-                         .padStart(2, '0')}/${date.getFullYear()}`;
+                       const formattedDate = `${date.getFullYear().toString().padStart(2, '0')}-${(date.getMonth() + 1)
+                        .toString()
+                        .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
                        editedReservation.checkOut = formattedDate;
                      }
                    }}

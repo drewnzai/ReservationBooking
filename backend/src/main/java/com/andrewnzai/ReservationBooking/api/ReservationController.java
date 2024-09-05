@@ -6,6 +6,7 @@ import com.andrewnzai.ReservationBooking.dtos.ReservationRequest;
 import com.andrewnzai.ReservationBooking.services.ReservationService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,7 +63,7 @@ public class ReservationController {
         try{
             reservationService.completeReservationModification(reservationDto);
 
-            return ResponseEntity.ok();
+            return true;
         }catch(Exception e){
             return APIResponse.builder().data("Could not modify the reservation").build();
         }
