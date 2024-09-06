@@ -100,7 +100,7 @@ Once both the backend and frontend are running:
 ### Troubleshooting
 
 -   **Database connection issues**: Ensure your MySQL instance is running and that the `application.properties` file has the correct credentials.
--   **Port conflicts**: If you encounter port conflicts, ensure no other applications are using ports `8080` (for Spring Boot) and `3000` (for React).
+-   **Port conflicts**: If you encounter port conflicts, ensure no other applications are using ports `8080` (for Spring Boot), `3000` (for normal user), and `5173` (for administrators).
 -   **Email sending issues**: If emails are not being sent, verify the SMTP configuration in your `application.properties` and consider using an App Password if you're using Gmail.
 
 ### Contributing
