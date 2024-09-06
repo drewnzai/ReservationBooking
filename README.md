@@ -41,10 +41,19 @@ This project is a room reservation system for a hotel, allowing users to manage 
  ```
 ### Running the Frontend
 
-1.  **Navigate to the frontend directory**:
+1.  **Navigate to the user directory**:
 ```bash
-cd frontend
+cd frontend/user
 ```
+
+OR
+
+1.  **Navigate to the admin directory**:
+```bash
+cd frontend/admin
+```
+
+
 2. **Install dependencies**:
 ```bash
 npm install
