@@ -7,6 +7,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import {Box, Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import Loading from "../components/Loading";
+import AuthService from "../services/AuthService.service";
 
 const localizer = momentLocalizer(moment);
 
@@ -29,6 +30,7 @@ export default function Home(){
     const reservationService = new ReservationService();
     const [loading, setLoading] = useState<boolean>(true);
     const navigate = useNavigate();
+    const authService = new AuthService();
 
     useEffect(() => {
         reservationService.getAllReservations()
@@ -80,18 +82,16 @@ export default function Home(){
                     }}
                     onClick={() => {
                     authService.logout();
-                    navigate("/login");
                     }}>
                 Log out
             </Button>
         </Box>
-        <br/>
         <Calendar
         localizer={localizer}
         events={reservations}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 600,
+        style={{ height: 620,
             color: "black"
          }}
         onSelectEvent={handleSelectEvent}

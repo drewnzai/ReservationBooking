@@ -25,4 +25,9 @@ export default class AuthService{
             }
         )
     }
+
+    logout(){
+        localStorage.removeItem("reservation_admin");
+        this.navigate("/login");
+    }
 }
