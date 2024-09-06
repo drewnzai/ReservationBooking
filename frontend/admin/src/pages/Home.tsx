@@ -4,8 +4,9 @@ import ReservationService from "../services/ReservationService.service";
 import {Calendar, momentLocalizer} from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import {Box} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import Loading from "../components/Loading";
 
 const localizer = momentLocalizer(moment);
 
@@ -26,6 +27,7 @@ const EventComponent = ({ event }: {event: any}) => {
 export default function Home(){
     const [reservations, setReservations] = useState<CalendarEvent[]>([]);
     const reservationService = new ReservationService();
+    const [loading, setLoading] = useState<boolean>(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,6 +42,7 @@ export default function Home(){
                 }));
 
                 setReservations(data);
+                setLoading(false);
             })
     }, []); 
 
@@ -49,18 +52,46 @@ export default function Home(){
       };
 
     return(
+        <>
+        {loading? (
+            <Loading/>
+        ):
+        (
         <Box 
         sx={{
             padding: "20px",
             backgroundColor: "#f7f7f7"
         }}
         >
-            <Calendar
+        <Box
+        sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "auto",
+            justifyContent: "flex-end", // Push the button to the bottom
+            alignItems: "center", // Center the button horizontally
+            paddingBottom: "5px" // Optional padding to avoid sticking to the bottom edge
+          }}
+        >
+                <Button 
+                    variant="contained"
+                    sx={{
+                    backgroundColor: "red"
+                    }}
+                    onClick={() => {
+                    authService.logout();
+                    navigate("/login");
+                    }}>
+                Log out
+            </Button>
+        </Box>
+        <br/>
+        <Calendar
         localizer={localizer}
         events={reservations}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 650,
+        style={{ height: 600,
             color: "black"
          }}
         onSelectEvent={handleSelectEvent}
@@ -71,5 +102,7 @@ export default function Home(){
         defaultView="month"
       />
         </Box>
+        )}
+        </>
     );
 }
