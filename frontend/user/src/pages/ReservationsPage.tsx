@@ -109,7 +109,6 @@ export default function ReservationPage() {
         ))
       )}
 
-      {/* Confirmation Dialog */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Delete Reservation</DialogTitle>
         <DialogContent>
