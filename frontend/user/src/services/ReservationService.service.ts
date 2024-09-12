@@ -20,7 +20,7 @@ export default class ReservationService{
     }
 
     getReservations(){
-        return ApiInterceptor.get("reservation")
+        return ApiInterceptor.get("reservation/user")
             .then(
                 (response) => {
                     if(response.data){
